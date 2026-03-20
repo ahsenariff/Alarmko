@@ -1,0 +1,20 @@
+<resources>
+
+    <style name="Theme.Alarmko.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">#1D9E75</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_alarm</item>
+        <item name="postSplashScreenTheme">@style/Theme.Alarmko</item>
+    </style>
+
+    <style name="Theme.Alarmko" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">#1D9E75</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorPrimaryContainer">#E1F5EE</item>
+        <item name="colorSecondary">#BA7517</item>
+        <item name="colorOnSecondary">#FFFFFF</item>
+        <item name="colorSecondaryContainer">#FAEEDA</item>
+        <item name="colorSurface">#FFFFFF</item>
+        <item name="colorOnSurface">#1A1A1A</item>
+    </style>
+
+</resources>

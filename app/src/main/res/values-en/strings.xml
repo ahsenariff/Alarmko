@@ -1,0 +1,82 @@
+<resources>
+    <string name="app_name">Alarmko</string>
+
+    <!-- Bottom Navigation -->
+    <string name="nav_home">Home</string>
+    <string name="nav_alarms">Alarms</string>
+    <string name="nav_history">History</string>
+    <string name="nav_settings">Settings</string>
+
+    <!-- Home Screen -->
+    <string name="next_alarm">Next alarm</string>
+    <string name="tasks_today">Today\'s tasks</string>
+    <string name="streak_label">consecutive days completed</string>
+    <string name="good_morning">Good morning</string>
+
+    <!-- Alarms Screen -->
+    <string name="alarms_title">Alarms</string>
+    <string name="add_alarm">New alarm</string>
+    <string name="no_alarms">No alarms created</string>
+
+    <!-- Create Alarm -->
+    <string name="create_alarm_title">New alarm</string>
+    <string name="task_description">Task description</string>
+    <string name="task_hint">E.g. Take morning pill...</string>
+    <string name="select_mission">Select mission</string>
+    <string name="notify_before">Notify before</string>
+    <string name="no_notification">No notification</string>
+    <string name="notify_5">5 minutes</string>
+    <string name="notify_10">10 minutes</string>
+    <string name="notify_15">15 minutes</string>
+    <string name="notify_30">30 minutes</string>
+    <string name="save_alarm">Save alarm</string>
+    <string name="repeat_days">Repeat</string>
+
+    <!-- Days -->
+    <string name="monday">Mo</string>
+    <string name="tuesday">Tu</string>
+    <string name="wednesday">We</string>
+    <string name="thursday">Th</string>
+    <string name="friday">Fr</string>
+    <string name="saturday">Sa</string>
+    <string name="sunday">Su</string>
+
+    <!-- Missions -->
+    <string name="mission_math">Math</string>
+    <string name="mission_shake">Shake</string>
+    <string name="mission_qr">QR code</string>
+    <string name="mission_photo">Camera</string>
+    <string name="mission_steps">Steps</string>
+
+    <!-- Alarm Ring Screen -->
+    <string name="start_mission">Start mission</string>
+    <string name="snooze">Snooze (5 min)</string>
+    <string name="alarm_label">Alarm</string>
+
+    <!-- History -->
+    <string name="history_title">History</string>
+    <string name="completed">Completed</string>
+    <string name="missed">Missed</string>
+    <string name="best_streak">Best:</string>
+    <string name="days">days</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+    <string name="sound_vibration">Sound and vibration</string>
+    <string name="theme">Theme</string>
+    <string name="theme_light">Light</string>
+    <string name="theme_dark">Dark</string>
+    <string name="bedtime_reminder">Bedtime reminder</string>
+    <string name="sleep_goal">Sleep goal (hours)</string>
+    <string name="language">Language</string>
+
+    <!-- Notifications -->
+    <string name="notification_title">Upcoming alarm</string>
+    <string name="notification_text">Your alarm is in %1$d minutes</string>
+    <string name="bedtime_notification_title">Time to sleep</string>
+    <string name="bedtime_notification_text">Tomorrow you wake up at %1$s</string>
+
+    <!-- Errors -->
+    <string name="error_no_title">Please enter a description</string>
+    <string name="error_no_mission">Please select a mission</string>
+</resources>

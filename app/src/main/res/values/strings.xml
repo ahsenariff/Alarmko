@@ -1,0 +1,82 @@
+<resources>
+    <string name="app_name">Alarmko</string>
+
+    <!-- Bottom Navigation -->
+    <string name="nav_home">Начало</string>
+    <string name="nav_alarms">Аларми</string>
+    <string name="nav_history">История</string>
+    <string name="nav_settings">Настройки</string>
+
+    <!-- Home Screen -->
+    <string name="next_alarm">Следваща аларма</string>
+    <string name="tasks_today">Задачи за днес</string>
+    <string name="streak_label">поредни дни с изпълнени задачи</string>
+    <string name="good_morning">Добро утро</string>
+
+    <!-- Alarms Screen -->
+    <string name="alarms_title">Аларми</string>
+    <string name="add_alarm">Нова аларма</string>
+    <string name="no_alarms">Няма създадени аларми</string>
+
+    <!-- Create Alarm -->
+    <string name="create_alarm_title">Нова аларма</string>
+    <string name="task_description">Описание на задача</string>
+    <string name="task_hint">Напр. Вземи сутрешното хапче...</string>
+    <string name="select_mission">Избери мисия</string>
+    <string name="notify_before">Известие преди</string>
+    <string name="no_notification">Без известие</string>
+    <string name="notify_5">5 минути</string>
+    <string name="notify_10">10 минути</string>
+    <string name="notify_15">15 минути</string>
+    <string name="notify_30">30 минути</string>
+    <string name="save_alarm">Запази аларма</string>
+    <string name="repeat_days">Повторение</string>
+
+    <!-- Days -->
+    <string name="monday">Пн</string>
+    <string name="tuesday">Вт</string>
+    <string name="wednesday">Ср</string>
+    <string name="thursday">Чт</string>
+    <string name="friday">Пт</string>
+    <string name="saturday">Сб</string>
+    <string name="sunday">Нд</string>
+
+    <!-- Missions -->
+    <string name="mission_math">Математика</string>
+    <string name="mission_shake">Разклащане</string>
+    <string name="mission_qr">QR код</string>
+    <string name="mission_photo">Камера</string>
+    <string name="mission_steps">Стъпки</string>
+
+    <!-- Alarm Ring Screen -->
+    <string name="start_mission">Стартирай мисия</string>
+    <string name="snooze">Snooze (5 мин)</string>
+    <string name="alarm_label">Аларма</string>
+
+    <!-- History -->
+    <string name="history_title">История</string>
+    <string name="completed">Изпълнена</string>
+    <string name="missed">Пропусната</string>
+    <string name="best_streak">Най-добър:</string>
+    <string name="days">дни</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Настройки</string>
+    <string name="sound_vibration">Звук и вибрации</string>
+    <string name="theme">Тема</string>
+    <string name="theme_light">Светла</string>
+    <string name="theme_dark">Тъмна</string>
+    <string name="bedtime_reminder">Bedtime reminder</string>
+    <string name="sleep_goal">Желани часове сън</string>
+    <string name="language">Език</string>
+
+    <!-- Notifications -->
+    <string name="notification_title">Предстояща аларма</string>
+    <string name="notification_text">Алармата ви е след %1$d минути</string>
+    <string name="bedtime_notification_title">Време за лягане</string>
+    <string name="bedtime_notification_text">Утре ставате в %1$s</string>
+
+    <!-- Errors -->
+    <string name="error_no_title">Моля въведете описание</string>
+    <string name="error_no_mission">Моля изберете мисия</string>
+</resources>
