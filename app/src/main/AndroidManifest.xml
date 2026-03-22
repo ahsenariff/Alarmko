@@ -36,6 +36,12 @@
             android:name=".alarm.AlarmService"
             android:exported="false"
             android:foregroundServiceType="mediaPlayback"/>
+        <activity
+            android:name=".ui.AlarmRingActivity"
+            android:exported="false"
+            android:showWhenLocked="true"
+            android:turnScreenOn="true"
+            android:theme="@style/Theme.Alarmko"/>
     </application>
 
 </manifest>

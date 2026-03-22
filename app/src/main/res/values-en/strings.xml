@@ -79,4 +79,7 @@
     <!-- Errors -->
     <string name="error_no_title">Please enter a description</string>
     <string name="error_no_mission">Please select a mission</string>
+    <string name="mission_hint">Complete the mission to dismiss:</string>
+    <string name="good_afternoon">Good afternoon</string>
+    <string name="good_evening">Good evening</string>
 </resources>
