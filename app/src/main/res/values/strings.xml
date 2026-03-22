@@ -82,4 +82,33 @@
     <string name="mission_hint">За изключване изпълни мисията:</string>
     <string name="good_afternoon">Добър ден</string>
     <string name="good_evening">Добър вечер</string>
+
+    <!-- Грешки при аларма -->
+    <string name="error_alarm_scheduling">Грешка при насрочване на аларма</string>
+    <string name="error_alarm_permission">Няма разрешение за аларми</string>
+    <string name="error_alarm_not_found">Алармата не е намерена</string>
+    <string name="error_alarm_invalid_time">Невалиден час на аларма</string>
+    <string name="error_alarm_invalid_title">Моля въведете описание на задачата</string>
+    <string name="error_alarm_no_mission">Моля изберете мисия</string>
+
+    <!-- Грешки при база данни -->
+    <string name="error_database">Грешка при работа с базата данни</string>
+    <string name="error_database_insert">Грешка при запис на данни</string>
+    <string name="error_database_update">Грешка при обновяване на данни</string>
+    <string name="error_database_delete">Грешка при изтриване на данни</string>
+
+    <!-- Грешки при известия -->
+    <string name="error_notification">Грешка при показване на известие</string>
+    <string name="error_notification_permission">Няма разрешение за известия</string>
+
+    <!-- Грешки при мисия -->
+    <string name="error_mission_failed">Мисията не беше изпълнена успешно</string>
+    <string name="error_mission_photo">Грешка при заснемане на снимка</string>
+    <string name="error_mission_qr">QR кодът не беше разпознат</string>
+    <string name="error_mission_steps_sensor">Сензорът за стъпки не е наличен</string>
+    <string name="error_mission_shake_sensor">Сензорът за разклащане не е наличен</string>
+
+    <string name="alarm_saved">Алармата е запазена успешно</string>
+    <string name="default_alarm_title">Аларма</string>
+    <string name="back">Назад</string>
 </resources>

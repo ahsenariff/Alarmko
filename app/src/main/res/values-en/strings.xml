@@ -82,4 +82,33 @@
     <string name="mission_hint">Complete the mission to dismiss:</string>
     <string name="good_afternoon">Good afternoon</string>
     <string name="good_evening">Good evening</string>
+
+    <!-- Alarm errors -->
+    <string name="error_alarm_scheduling">Error scheduling alarm</string>
+    <string name="error_alarm_permission">No permission for alarms</string>
+    <string name="error_alarm_not_found">Alarm not found</string>
+    <string name="error_alarm_invalid_time">Invalid alarm time</string>
+    <string name="error_alarm_invalid_title">Please enter a task description</string>
+    <string name="error_alarm_no_mission">Please select a mission</string>
+
+    <!-- Database errors -->
+    <string name="error_database">Database error</string>
+    <string name="error_database_insert">Error saving data</string>
+    <string name="error_database_update">Error updating data</string>
+    <string name="error_database_delete">Error deleting data</string>
+
+    <!-- Notification errors -->
+    <string name="error_notification">Notification error</string>
+    <string name="error_notification_permission">No permission for notifications</string>
+
+    <!-- Mission errors -->
+    <string name="error_mission_failed">Mission was not completed successfully</string>
+    <string name="error_mission_photo">Error taking photo</string>
+    <string name="error_mission_qr">QR code was not recognized</string>
+    <string name="error_mission_steps_sensor">Step sensor is not available</string>
+    <string name="error_mission_shake_sensor">Shake sensor is not available</string>
+
+    <string name="alarm_saved">Alarm saved successfully</string>
+    <string name="default_alarm_title">Alarm</string>
+    <string name="back">Back</string>
 </resources>

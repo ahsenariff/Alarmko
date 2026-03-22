@@ -25,4 +25,9 @@
         android:name="com.example.alarmko.ui.SettingsFragment"
         android:label="@string/nav_settings"/>
 
+    <fragment
+        android:id="@+id/createAlarmFragment"
+        android:name="com.example.alarmko.ui.CreateAlarmFragment"
+        android:label="@string/create_alarm_title"/>
+
 </navigation>

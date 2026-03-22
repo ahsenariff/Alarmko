@@ -7,6 +7,9 @@ import com.example.alarmko.data.repository.AlarmRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import com.example.alarmko.exceptions.AlarmSchedulingException
+import com.example.alarmko.exceptions.AlarmPermissionException
+import com.example.alarmko.exceptions.DatabaseException
 
 class BootReceiver : BroadcastReceiver() {
 
@@ -17,9 +20,19 @@ class BootReceiver : BroadcastReceiver() {
         val scheduler = AlarmScheduler(context)
 
         CoroutineScope(Dispatchers.IO).launch {
-            val activeAlarms = repository.getActiveAlarms()
-            activeAlarms.forEach { alarm ->
-                scheduler.schedule(alarm)
+            try {
+                val activeAlarms = repository.getActiveAlarms()
+                activeAlarms.forEach { alarm ->
+                    try {
+                        scheduler.schedule(alarm)
+                    } catch (e: AlarmSchedulingException) {
+                        e.printStackTrace()
+                    } catch (e: AlarmPermissionException) {
+                        e.printStackTrace()
+                    }
+                }
+            } catch (e: DatabaseException) {
+                e.printStackTrace()
             }
         }
     }

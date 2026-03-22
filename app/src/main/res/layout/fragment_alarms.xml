@@ -1,18 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="?attr/colorSurface">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvAlarms"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        android:clipToPadding="false"/>
 
     <TextView
+        android:id="@+id/tvNoAlarms"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/nav_alarms"
-        android:textSize="24sp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        xmlns:app="http://schemas.android.com/apk/res-auto"/>
+        android:text="@string/no_alarms"
+        android:textSize="16sp"
+        android:textColor="?attr/colorOnSurfaceVariant"
+        android:layout_gravity="center"
+        android:visibility="gone"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/fabAddAlarm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:text="@string/add_alarm"
+        app:icon="@drawable/ic_alarm"
+        app:backgroundTint="?attr/colorPrimary"/>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
