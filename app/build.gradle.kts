@@ -59,4 +59,5 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     implementation("androidx.core:core-splashscreen:1.0.1")
     implementation("androidx.recyclerview:recyclerview:1.3.2")
+    implementation("com.google.mlkit:image-labeling:17.0.7")
 }

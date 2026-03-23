@@ -111,4 +111,15 @@
     <string name="alarm_saved">Alarm saved successfully</string>
     <string name="default_alarm_title">Alarm</string>
     <string name="back">Back</string>
+    <string name="enter_answer">Please enter an answer</string>
+    <string name="wrong_answer">Wrong answer — try again!</string>
+    <string name="your_answer">Your answer</string>
+    <string name="check_answer">Check</string>
+    <string name="shake_target">Shake your phone %1$d times</string>
+    <string name="shake_instruction">Shake your phone vigorously!</string>
+    <string name="qr_scanning">Scanning...</string>
+    <string name="qr_success">QR code recognized!</string>
+    <string name="qr_wrong_code">Wrong QR code — try again</string>
+    <string name="qr_instruction">Point the camera at the QR code</string>
+    <string name="camera_permission_denied">Camera permission is required</string>
 </resources>

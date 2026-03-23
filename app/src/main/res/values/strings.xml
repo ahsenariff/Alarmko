@@ -111,4 +111,15 @@
     <string name="alarm_saved">Алармата е запазена успешно</string>
     <string name="default_alarm_title">Аларма</string>
     <string name="back">Назад</string>
+    <string name="enter_answer">Моля въведете отговор</string>
+    <string name="wrong_answer">Грешен отговор — опитай отново!</string>
+    <string name="your_answer">Твоят отговор</string>
+    <string name="check_answer">Провери</string>
+    <string name="shake_target">Разклати телефона %1$d пъти</string>
+    <string name="shake_instruction">Разклащай телефона енергично!</string>
+    <string name="qr_scanning">Сканиране...</string>
+    <string name="qr_success">QR кодът е разпознат!</string>
+    <string name="qr_wrong_code">Грешен QR код — опитай отново</string>
+    <string name="qr_instruction">Насочи камерата към QR кода</string>
+    <string name="camera_permission_denied">Необходимо е разрешение за камера</string>
 </resources>
