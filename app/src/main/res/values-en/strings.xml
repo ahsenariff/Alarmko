@@ -122,4 +122,14 @@
     <string name="qr_wrong_code">Wrong QR code — try again</string>
     <string name="qr_instruction">Point the camera at the QR code</string>
     <string name="camera_permission_denied">Camera permission is required</string>
+
+    <string name="mission_camera">Mission: Camera</string>
+    <string name="photo_ready">Ready to take photo</string>
+    <string name="take_photo">Take photo</string>
+    <string name="photo_analyzing">Analyzing...</string>
+    <string name="photo_success">Object recognized!</string>
+    <string name="photo_no_object">No object detected — try again</string>
+    <string name="photo_error">Error taking photo</string>
+    <string name="detected_objects">Detected objects: %1$s</string>
+
 </resources>

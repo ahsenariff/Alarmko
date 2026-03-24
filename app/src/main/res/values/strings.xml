@@ -122,4 +122,14 @@
     <string name="qr_wrong_code">Грешен QR код — опитай отново</string>
     <string name="qr_instruction">Насочи камерата към QR кода</string>
     <string name="camera_permission_denied">Необходимо е разрешение за камера</string>
+
+    <string name="mission_camera">Мисия: Камера</string>
+    <string name="photo_ready">Готов за снимка</string>
+    <string name="take_photo">Снимай</string>
+    <string name="photo_analyzing">Анализиране...</string>
+    <string name="photo_success">Обектът е разпознат!</string>
+    <string name="photo_no_object">Не е открит обект — опитай отново</string>
+    <string name="photo_error">Грешка при заснемане</string>
+    <string name="detected_objects">Открити обекти: %1$s</string>
+
 </resources>
