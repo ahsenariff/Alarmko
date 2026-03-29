@@ -16,5 +16,9 @@
         <item name="colorSurface">#FFFFFF</item>
         <item name="colorOnSurface">#1A1A1A</item>
     </style>
+    <style name="Theme.Alarmko.NoActionBar" parent="Theme.Alarmko">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
 
 </resources>

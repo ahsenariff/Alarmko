@@ -6,6 +6,7 @@ import com.example.alarmko.data.db.AppDatabase
 import com.example.alarmko.data.model.Alarm
 import com.example.alarmko.data.model.AlarmLog
 import com.example.alarmko.data.model.BedtimeSettings
+import com.example.alarmko.data.model.CameraSettings
 import com.example.alarmko.exceptions.DatabaseException
 import com.example.alarmko.exceptions.DatabaseInsertException
 import com.example.alarmko.exceptions.DatabaseUpdateException
@@ -83,5 +84,45 @@ class AlarmRepository(context: Context) {
 
     suspend fun getBedtimeSettingsOnce(): BedtimeSettings? {
         return bedtimeDao.getOnce()
+    }
+    private val cameraSettingsDao = db.cameraSettingsDao()
+
+    // Camera Settings
+    val allCameraSettings: LiveData<List<CameraSettings>> =
+        cameraSettingsDao.getAll()
+
+    suspend fun saveCameraSettings(settings: CameraSettings) {
+        try {
+            cameraSettingsDao.insert(settings)
+        } catch (e: Exception) {
+            throw DatabaseInsertException(ErrorCode.DATABASE_INSERT_FAILED, e)
+        }
+    }
+
+    suspend fun getEnabledObjects(): List<CameraSettings> {
+        return try {
+            cameraSettingsDao.getEnabledObjects()
+        } catch (e: Exception) {
+            throw DatabaseException(ErrorCode.DATABASE_ERROR, e)
+        }
+    }
+
+    suspend fun getEnabledObjectsForCategory(
+        category: com.example.alarmko.data.model.PhotoCategory
+    ): List<com.example.alarmko.data.model.PhotoObject> {
+        return try {
+            val enabled = cameraSettingsDao.getEnabledObjects()
+            enabled.mapNotNull { settings ->
+                try {
+                    val obj = com.example.alarmko.data.model.PhotoObject
+                        .valueOf(settings.objectName)
+                    if (obj.category == category) obj else null
+                } catch (e: IllegalArgumentException) {
+                    null
+                }
+            }
+        } catch (e: Exception) {
+            throw DatabaseException(ErrorCode.DATABASE_ERROR, e)
+        }
     }
 }

@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:background="?attr/colorSurface">
 
-    <!-- Toolbar с бутон назад -->
+    <!-- Toolbar -->
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -16,249 +16,318 @@
         app:navigationIcon="@drawable/ic_back"
         app:navigationContentDescription="@string/back"/>
 
-    <!-- Останалото съдържание -->
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
-
-        <!-- TimePicker -->
-        <TimePicker
-            android:id="@+id/timePicker"
+        <!-- Вертикален контейнер за цялото съдържание -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:timePickerMode="clock"/>
+            android:orientation="vertical"
+            android:padding="16dp">
 
-        <!-- Дни за повторение -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/repeat_days"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:textColor="?attr/colorOnSurface"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="8dp"/>
-
-        <com.google.android.material.chip.ChipGroup
-            android:id="@+id/chipGroupDays"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:singleSelection="false">
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipMon"
+            <!-- NumberPicker за час — хоризонтален -->
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/monday"
-                style="@style/Widget.Material3.Chip.Filter"
-                android:checkable="true"/>
+                android:orientation="horizontal"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp">
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipTue"
+                <NumberPicker
+                    android:id="@+id/pickerHour"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=":"
+                    android:textSize="32sp"
+                    android:textStyle="bold"
+                    android:textColor="?attr/colorOnSurface"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"/>
+
+                <NumberPicker
+                    android:id="@+id/pickerMinute"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <!-- Дни за повторение -->
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/tuesday"
-                style="@style/Widget.Material3.Chip.Filter"
-                android:checkable="true"/>
+                android:text="@string/repeat_days"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="?attr/colorOnSurface"
+                android:layout_marginBottom="8dp"/>
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipWed"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/wednesday"
-                style="@style/Widget.Material3.Chip.Filter"
-                android:checkable="true"/>
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipThu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/thursday"
-                style="@style/Widget.Material3.Chip.Filter"
-                android:checkable="true"/>
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipFri"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/friday"
-                style="@style/Widget.Material3.Chip.Filter"
-                android:checkable="true"/>
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipSat"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/saturday"
-                style="@style/Widget.Material3.Chip.Filter"
-                android:checkable="true"/>
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipSun"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/sunday"
-                style="@style/Widget.Material3.Chip.Filter"
-                android:checkable="true"/>
-
-        </com.google.android.material.chip.ChipGroup>
-
-        <!-- Описание на задача -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilTaskDescription"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:hint="@string/task_description"
-            style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etTaskDescription"
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chipGroupDays"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"
-                android:maxLines="2"/>
+                android:layout_marginBottom="8dp"
+                app:singleSelection="false">
 
-        </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipMon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/monday"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:checkable="true"/>
 
-        <!-- Избор на мисия -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/select_mission"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:textColor="?attr/colorOnSurface"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="8dp"/>
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipTue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tuesday"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:checkable="true"/>
 
-        <com.google.android.material.chip.ChipGroup
-            android:id="@+id/chipGroupMissions"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:singleSelection="true">
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipWed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/wednesday"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:checkable="true"/>
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipMissionMath"
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipThu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/thursday"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:checkable="true"/>
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipFri"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/friday"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:checkable="true"/>
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipSat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/saturday"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:checkable="true"/>
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipSun"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sunday"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:checkable="true"/>
+
+            </com.google.android.material.chip.ChipGroup>
+
+            <!-- Описание на задача -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilTaskDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:hint="@string/task_description"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etTaskDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:maxLines="2"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Избор на мисия -->
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/mission_math"
-                style="@style/Widget.Material3.Chip.Filter"
-                android:checkable="true"/>
+                android:text="@string/select_mission"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="?attr/colorOnSurface"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"/>
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipMissionShake"
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chipGroupMissions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:singleSelection="true">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipMissionMath"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mission_math"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:checkable="true"/>
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipMissionPhoto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mission_photo"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:checkable="true"/>
+
+            </com.google.android.material.chip.ChipGroup>
+
+            <!-- Избор на категория — показва се само при PHOTO -->
+            <LinearLayout
+                android:id="@+id/layoutPhotoCategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/select_category"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:textColor="?attr/colorOnSurface"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="8dp"/>
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chipGroupCategories"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:singleSelection="true">
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipCategoryKitchen"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/category_kitchen"
+                        style="@style/Widget.Material3.Chip.Filter"
+                        android:checkable="true"/>
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipCategoryBathroom"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/category_bathroom"
+                        style="@style/Widget.Material3.Chip.Filter"
+                        android:checkable="true"/>
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipCategoryHealth"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/category_health"
+                        style="@style/Widget.Material3.Chip.Filter"
+                        android:checkable="true"/>
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipCategoryWorkspace"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/category_workspace"
+                        style="@style/Widget.Material3.Chip.Filter"
+                        android:checkable="true"/>
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipCategoryLivingRoom"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/category_living_room"
+                        style="@style/Widget.Material3.Chip.Filter"
+                        android:checkable="true"/>
+
+                </com.google.android.material.chip.ChipGroup>
+
+            </LinearLayout>
+
+            <!-- Известие преди -->
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/mission_shake"
-                style="@style/Widget.Material3.Chip.Filter"
-                android:checkable="true"/>
+                android:text="@string/notify_before"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="?attr/colorOnSurface"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"/>
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipMissionQr"
-                android:layout_width="wrap_content"
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chipGroupNotify"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/mission_qr"
-                style="@style/Widget.Material3.Chip.Filter"
-                android:checkable="true"/>
+                app:singleSelection="true">
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipMissionPhoto"
-                android:layout_width="wrap_content"
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipNotifyNone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/no_notification"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:checkable="true"
+                    android:checked="true"/>
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipNotify5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/notify_5"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:checkable="true"/>
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipNotify10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/notify_10"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:checkable="true"/>
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipNotify15"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/notify_15"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:checkable="true"/>
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipNotify30"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/notify_30"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:checkable="true"/>
+
+            </com.google.android.material.chip.ChipGroup>
+
+            <!-- Бутон Запази -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSaveAlarm"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/mission_photo"
-                style="@style/Widget.Material3.Chip.Filter"
-                android:checkable="true"/>
+                android:text="@string/save_alarm"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="16dp"
+                android:padding="16dp"
+                app:backgroundTint="?attr/colorPrimary"/>
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipMissionSteps"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/mission_steps"
-                style="@style/Widget.Material3.Chip.Filter"
-                android:checkable="true"/>
+        </LinearLayout>
 
-        </com.google.android.material.chip.ChipGroup>
-
-        <!-- Известие преди -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/notify_before"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:textColor="?attr/colorOnSurface"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="8dp"/>
-
-        <com.google.android.material.chip.ChipGroup
-            android:id="@+id/chipGroupNotify"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:singleSelection="true">
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipNotifyNone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/no_notification"
-                style="@style/Widget.Material3.Chip.Filter"
-                android:checkable="true"
-                android:checked="true"/>
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipNotify5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/notify_5"
-                style="@style/Widget.Material3.Chip.Filter"
-                android:checkable="true"/>
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipNotify10"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/notify_10"
-                style="@style/Widget.Material3.Chip.Filter"
-                android:checkable="true"/>
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipNotify15"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/notify_15"
-                style="@style/Widget.Material3.Chip.Filter"
-                android:checkable="true"/>
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipNotify30"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/notify_30"
-                style="@style/Widget.Material3.Chip.Filter"
-                android:checkable="true"/>
-
-        </com.google.android.material.chip.ChipGroup>
-
-        <!-- Бутон Запази -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnSaveAlarm"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/save_alarm"
-            android:layout_marginTop="24dp"
-            android:layout_marginBottom="16dp"
-            android:padding="16dp"
-            app:backgroundTint="?attr/colorPrimary"/>
-
-    </LinearLayout>
-
-</androidx.core.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 </LinearLayout>

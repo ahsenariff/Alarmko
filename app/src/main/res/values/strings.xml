@@ -132,4 +132,57 @@
     <string name="photo_error">Грешка при заснемане</string>
     <string name="detected_objects">Открити обекти: %1$s</string>
 
+    <!-- Категории -->
+    <string name="category_kitchen">Кухня</string>
+    <string name="category_bathroom">Баня</string>
+    <string name="category_health">Здраве</string>
+    <string name="category_workspace">Работно място</string>
+    <string name="category_living_room">Всекидневна</string>
+
+    <!-- Обекти — Кухня -->
+    <string name="object_glass">Чаша</string>
+    <string name="object_fridge">Хладилник</string>
+    <string name="object_plate">Чиния</string>
+    <string name="object_water_bottle">Бутилка вода</string>
+    <string name="object_coffee_cup">Чаша кафе</string>
+
+    <!-- Обекти — Баня -->
+    <string name="object_toothbrush">Четка за зъби</string>
+    <string name="object_soap">Сапун</string>
+    <string name="object_towel">Кърпа</string>
+    <string name="object_mirror">Огледало</string>
+
+    <!-- Обекти — Здраве -->
+    <string name="object_pill">Хапче</string>
+    <string name="object_thermometer">Термометър</string>
+    <string name="object_vitamins">Витамини</string>
+
+    <!-- Обекти — Работно място -->
+    <string name="object_notebook">Тетрадка</string>
+    <string name="object_pen">Химикалка</string>
+    <string name="object_keyboard">Клавиатура</string>
+    <string name="object_mouse">Мишка</string>
+
+    <!-- Обекти — Всекидневна -->
+    <string name="object_keys">Ключове</string>
+    <string name="object_book">Книга</string>
+    <string name="object_remote">Дистанционно</string>
+    <string name="object_window">Прозорец</string>
+
+    <string name="camera_mission_settings">Камера мисия — обекти</string>
+    <string name="camera_mission_hint">Избери обектите които имаш у дома. При аларма ще трябва да снимаш един от тях.</string>
+
+    <string name="select_category">Избери категория за снимане</string>
+    <string name="error_no_category">Моля избери категория за камера мисията</string>
+
+    <string name="hint_try_angle">💡 Пробвай от друг ъгъл</string>
+    <string name="hint_better_light">💡 Опитай на по-добра светлина</string>
+    <string name="attempt_count">Опит %1$d</string>
+    <string name="new_object_suggested">Нов обект: %1$s</string>
+    <string name="splash_tagline">Alarmko: No more excuses.</string>
+
+    <string name="no_history">Няма история все още</string>
+    <string name="mission_success">✅ Мисията изпълнена</string>
+    <string name="mission_failed">❌ Мисията не е изпълнена</string>
+
 </resources>

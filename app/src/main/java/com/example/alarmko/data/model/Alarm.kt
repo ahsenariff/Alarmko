@@ -14,6 +14,6 @@ data class Alarm(
     val missionType: MissionType,
     val missionDifficulty: Int = 1,
     val notifyBeforeMinutes: Int = 0,
+    val photoCategory: String? = null,
     val isActive: Boolean = true
-) {
-}
+)

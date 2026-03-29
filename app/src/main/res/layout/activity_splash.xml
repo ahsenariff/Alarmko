@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="#1D9E75">
+
+    <ImageView
+        android:id="@+id/ivSplashLogo"
+        android:layout_width="350dp"
+        android:layout_height="350dp"
+        android:src="@mipmap/ic_launcher_foreground"
+        android:layout_marginBottom="32dp"/>
+
+    <TextView
+        android:id="@+id/tvAppName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/splash_tagline"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:gravity="center"
+        android:fontFamily="sans-serif-light"
+        android:letterSpacing="0.05"
+        android:paddingStart="32dp"
+        android:paddingEnd="32dp"/>
+
+</LinearLayout>
