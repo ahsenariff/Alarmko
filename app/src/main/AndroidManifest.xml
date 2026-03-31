@@ -53,6 +53,11 @@
             android:name=".ui.MainActivity"
             android:exported="false"
             android:theme="@style/Theme.Alarmko.NoActionBar"/>
+
+        <activity
+            android:name=".ui.MissionSuccessActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Alarmko.NoActionBar"/>
     </application>
 
 

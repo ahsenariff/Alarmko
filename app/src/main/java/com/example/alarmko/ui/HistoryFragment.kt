@@ -49,7 +49,6 @@ class HistoryFragment : Fragment() {
             } else {
                 tvNoHistory.visibility = View.GONE
                 rvHistory.visibility = View.VISIBLE
-                // Показваме най-новите първи
                 adapter.submitList(logs.sortedByDescending { it.triggeredAt })
             }
         }

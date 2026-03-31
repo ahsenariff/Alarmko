@@ -1,42 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="108dp"
     android:height="108dp"
     android:viewportWidth="108"
     android:viewportHeight="108">
 
-    <!-- Тяло на будилника -->
+    <!-- Тяло на будилника — по-малко -->
     <path
         android:fillColor="#CC0000"
-        android:pathData="M54,20 C35,20 20,35 20,54 C20,73 35,88 54,88 C73,88 88,73 88,54 C88,35 73,20 54,20Z"/>
+        android:pathData="M54,30 C40,30 30,40 30,54 C30,68 40,78 54,78 C68,78 78,68 78,54 C78,40 68,30 54,30Z"/>
 
     <!-- Вътрешен кръг -->
     <path
         android:fillColor="#FFFFFF"
-        android:pathData="M54,28 C39,28 28,39 28,54 C28,69 39,80 54,80 C69,80 80,69 80,54 C80,39 69,28 54,28Z"/>
+        android:pathData="M54,37 C44,37 37,44 37,54 C37,64 44,71 54,71 C64,71 71,64 71,54 C71,44 64,37 54,37Z"/>
 
-    <!-- Звънчета горе ляво -->
+    <!-- Звънче ляво -->
     <path
         android:fillColor="#CC0000"
-        android:pathData="M32,22 C28,18 22,18 18,22 C14,26 14,32 18,36 L32,22Z"/>
+        android:pathData="M37,32 C34,29 30,29 27,32 C24,35 24,39 27,42 L37,32Z"/>
 
-    <!-- Звънчета горе дясно -->
+    <!-- Звънче дясно -->
     <path
         android:fillColor="#CC0000"
-        android:pathData="M76,22 C80,18 86,18 90,22 C94,26 94,32 90,36 L76,22Z"/>
+        android:pathData="M71,32 C74,29 78,29 81,32 C84,35 84,39 81,42 L71,32Z"/>
 
-    <!-- Крачета долу -->
+    <!-- Крак ляво -->
     <path
         android:fillColor="#CC0000"
-        android:pathData="M40,86 C38,90 36,94 34,96 L44,96 L46,86Z"/>
+        android:pathData="M44,76 C42,80 41,83 40,85 L48,85 L49,76Z"/>
+
+    <!-- Крак дясно -->
     <path
         android:fillColor="#CC0000"
-        android:pathData="M68,86 C70,90 72,94 74,96 L64,96 L62,86Z"/>
+        android:pathData="M64,76 C66,80 67,83 68,85 L60,85 L59,76Z"/>
 
     <!-- Тикче -->
+    <!-- Тикче -->
     <path
-        android:fillColor="#00AA44"
+        android:fillColor="#00000000"
         android:strokeColor="#00AA44"
-        android:strokeWidth="3"
-        android:pathData="M38,54 L48,64 L70,42"/>
+        android:strokeWidth="4"
+        android:pathData="M44,54 L51,61 L64,47"/>
 
 </vector>

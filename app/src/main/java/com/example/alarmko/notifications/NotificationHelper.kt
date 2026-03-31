@@ -31,12 +31,12 @@ class NotificationHelper(private val context: Context) {
         val manager = context.getSystemService(NotificationManager::class.java)
         manager.createNotificationChannel(channel)
     }
-    fun showPreAlarmNotification(alarmId: Int) {
+    fun showPreAlarmNotification(alarmId: Int, minutesBefore: Int) {
         try {
             val notification = NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_alarm)
                 .setContentTitle(context.getString(R.string.notification_title))
-                .setContentText(context.getString(R.string.notification_text, 15))
+                .setContentText(context.getString(R.string.notification_text, minutesBefore))
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setAutoCancel(true)
                 .build()

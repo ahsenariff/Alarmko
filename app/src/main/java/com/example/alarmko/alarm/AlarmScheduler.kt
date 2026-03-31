@@ -74,6 +74,7 @@ class AlarmScheduler(private val context: Context) {
         val notifyIntent = Intent(context, AlarmReceiver::class.java).apply {
             putExtra("ALARM_ID", alarm.id)
             putExtra("IS_NOTIFICATION", true)
+            putExtra("NOTIFY_BEFORE_MINUTES", alarm.notifyBeforeMinutes) // ← добавяме
         }
 
         val notifyPendingIntent = PendingIntent.getBroadcast(

@@ -14,8 +14,9 @@ class AlarmReceiver : BroadcastReceiver() {
         if (alarmId == -1) return
 
         if (isNotification) {
+            val minutesBefore = intent.getIntExtra("NOTIFY_BEFORE_MINUTES", 15)
             val notificationHelper = NotificationHelper(context)
-            notificationHelper.showPreAlarmNotification(alarmId)
+            notificationHelper.showPreAlarmNotification(alarmId, minutesBefore)
         } else {
             val serviceIntent = Intent(context, AlarmService::class.java).apply {
                 putExtra("ALARM_ID", alarmId)

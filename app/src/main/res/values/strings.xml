@@ -57,7 +57,7 @@
     <string name="history_title">История</string>
     <string name="completed">Изпълнена</string>
     <string name="missed">Пропусната</string>
-    <string name="best_streak">Най-добър:</string>
+    <string name="best_streak" formatted="false">Най-добър:</string>
     <string name="days">дни</string>
 
     <!-- Settings -->
@@ -170,7 +170,7 @@
     <string name="object_window">Прозорец</string>
 
     <string name="camera_mission_settings">Камера мисия — обекти</string>
-    <string name="camera_mission_hint">Избери обектите които имаш у дома. При аларма ще трябва да снимаш един от тях.</string>
+    <string name="camera_mission_hint">Избери обектите, които имаш у дома. При аларма ще трябва да снимаш един от тях.</string>
 
     <string name="select_category">Избери категория за снимане</string>
     <string name="error_no_category">Моля избери категория за камера мисията</string>
@@ -184,5 +184,11 @@
     <string name="no_history">Няма история все още</string>
     <string name="mission_success">✅ Мисията изпълнена</string>
     <string name="mission_failed">❌ Мисията не е изпълнена</string>
+
+    <string name="best_streak_prefix">Най-добър:</string>
+
+    <string name="mission_success_title">Браво! 💪</string>
+    <string name="mission_success_message">Мисията е изпълнена успешно!</string>
+
 
 </resources>

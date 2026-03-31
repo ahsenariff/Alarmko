@@ -57,7 +57,7 @@
     <string name="history_title">History</string>
     <string name="completed">Completed</string>
     <string name="missed">Missed</string>
-    <string name="best_streak">Best:</string>
+    <string name="best_streak" formatted="false">Best:</string>
     <string name="days">days</string>
 
     <!-- Settings -->
@@ -184,5 +184,10 @@
     <string name="no_history">No history yet</string>
     <string name="mission_success">✅ Mission completed</string>
     <string name="mission_failed">❌ Mission not completed</string>
+
+    <string name="best_streak_prefix">Best:</string>
+
+    <string name="mission_success_title">Well done! 💪</string>
+    <string name="mission_success_message">Mission completed successfully!</string>
 
 </resources>

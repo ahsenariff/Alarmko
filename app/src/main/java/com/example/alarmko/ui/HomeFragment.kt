@@ -6,8 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.alarmko.R
-import com.example.alarmko.data.db.AppDatabase
 import com.example.alarmko.data.repository.AlarmRepository
 import com.example.alarmko.utils.TimeUtils
 import com.google.android.material.chip.Chip
@@ -43,8 +44,9 @@ class HomeFragment : Fragment() {
         repository = AlarmRepository(requireContext())
 
         initViews(view)
-        setDate()
+        setGreetingAndDate()
         observeAlarms()
+        observeStreak()
     }
 
     private fun initViews(view: View) {
@@ -58,50 +60,79 @@ class HomeFragment : Fragment() {
         chipMission = view.findViewById(R.id.chipMission)
     }
 
-    private fun setDate() {
-        val dateFormat = SimpleDateFormat("EEEE, d MMMM", Locale.getDefault())
-        tvDate.text = dateFormat.format(Date())
-
+    private fun setGreetingAndDate() {
         val hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
         tvGreeting.text = when {
             hour < 12 -> getString(R.string.good_morning)
             hour < 18 -> getString(R.string.good_afternoon)
             else -> getString(R.string.good_evening)
         }
+
+        val dateFormat = SimpleDateFormat("EEEE, d MMMM", Locale.getDefault())
+        tvDate.text = dateFormat.format(Date())
     }
 
     private fun observeAlarms() {
         repository.allAlarms.observe(viewLifecycleOwner) { alarms ->
-            if (alarms.isEmpty()) {
-                tvNextAlarmTime.text = "--:--"
-                tvNextAlarmTitle.text = getString(R.string.no_alarms)
-                chipDays.text = ""
-                chipMission.text = ""
-                return@observe
-            }
-
-            val today = TimeUtils.getTodayDayNumber()
             val nextAlarm = alarms
                 .filter { it.isActive }
                 .sortedBy { TimeUtils.getNextAlarmMillis(it.hour, it.minute) }
                 .firstOrNull()
 
-            nextAlarm?.let { alarm ->
-                tvNextAlarmTime.text = TimeUtils.formatTime(alarm.hour, alarm.minute)
-                tvNextAlarmTitle.text = alarm.title
-                chipDays.text = TimeUtils.formatDaysShort(alarm.repeatDays)
-                chipMission.text = getMissionName(alarm.missionType.name)
+            if (nextAlarm == null) {
+                tvNextAlarmTime.text = "--:--"
+                tvNextAlarmTitle.text = getString(R.string.no_alarms)
+                chipDays.text = ""
+                chipMission.text = ""
+                chipDays.visibility = View.GONE
+                chipMission.visibility = View.GONE
+            } else {
+                tvNextAlarmTime.text = TimeUtils.formatTime(nextAlarm.hour, nextAlarm.minute)
+                tvNextAlarmTitle.text = nextAlarm.title
+                chipDays.text = TimeUtils.formatDaysShort(nextAlarm.repeatDays)
+                chipMission.text = getMissionName(nextAlarm.missionType.name)
+                chipDays.visibility = View.VISIBLE
+                chipMission.visibility = View.VISIBLE
             }
         }
+    }
+
+    private fun observeStreak() {
+        repository.allLogs.observe(viewLifecycleOwner) { logs ->
+            val streak = calculateStreak(logs.map { it.triggeredAt to it.missionSuccess })
+            tvStreakCount.text = "$streak 🔥"
+            tvBestStreak.text = "${getString(R.string.best_streak_prefix)} $streak ${getString(R.string.days)}"
+        }
+    }
+
+    private fun calculateStreak(logs: List<Pair<Long, Boolean>>): Int {
+        if (logs.isEmpty()) return 0
+
+        // Сортираме от най-нов към най-стар
+        val sorted = logs.sortedByDescending { it.first }
+
+        var streak = 0
+        var lastDate = ""
+
+        for ((timestamp, success) in sorted) {
+            if (!success) break
+
+            val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            val date = dateFormat.format(Date(timestamp))
+
+            if (lastDate.isEmpty() || date != lastDate) {
+                streak++
+                lastDate = date
+            }
+        }
+
+        return streak
     }
 
     private fun getMissionName(missionType: String): String {
         return when (missionType) {
             "MATH" -> getString(R.string.mission_math)
-            "SHAKE" -> getString(R.string.mission_shake)
-            "QR_CODE" -> getString(R.string.mission_qr)
             "PHOTO" -> getString(R.string.mission_photo)
-            "STEPS" -> getString(R.string.mission_steps)
             else -> ""
         }
     }

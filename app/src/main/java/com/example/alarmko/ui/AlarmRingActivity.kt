@@ -160,6 +160,9 @@ class AlarmRingActivity : AppCompatActivity() {
         }
 
         stopService(Intent(this, AlarmService::class.java))
+
+        // Показваме успех екрана
+        startActivity(Intent(this, MissionSuccessActivity::class.java))
         finish()
     }
 

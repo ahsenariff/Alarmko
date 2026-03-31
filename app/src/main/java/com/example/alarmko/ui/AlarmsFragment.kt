@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alarmko.R
+import com.example.alarmko.alarm.AlarmScheduler
 import com.example.alarmko.data.repository.AlarmRepository
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import kotlinx.coroutines.launch
@@ -65,6 +66,34 @@ class AlarmsFragment : Fragment() {
         )
         rvAlarms.layoutManager = LinearLayoutManager(requireContext())
         rvAlarms.adapter = adapter
+        val itemTouchHelper = androidx.recyclerview.widget.ItemTouchHelper(
+            object : androidx.recyclerview.widget.ItemTouchHelper.SimpleCallback(
+                0,
+                androidx.recyclerview.widget.ItemTouchHelper.LEFT or
+                        androidx.recyclerview.widget.ItemTouchHelper.RIGHT
+            ) {
+                override fun onMove(
+                    recyclerView: RecyclerView,
+                    viewHolder: RecyclerView.ViewHolder,
+                    target: RecyclerView.ViewHolder
+                ): Boolean = false
+
+                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                    val position = viewHolder.adapterPosition
+                    val alarm = adapter.currentList[position]
+
+                    lifecycleScope.launch {
+                        try {
+                            repository.deleteAlarm(alarm)
+                            AlarmScheduler(requireContext()).cancel(alarm)
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+                    }
+                }
+            }
+        )
+        itemTouchHelper.attachToRecyclerView(rvAlarms)
     }
 
     private fun observeAlarms() {
