@@ -175,19 +175,29 @@
     <string name="select_category">Select category for photo</string>
     <string name="error_no_category">Please select a category for the camera mission</string>
 
-    <string name="hint_try_angle">💡 Try a different angle</string>
-    <string name="hint_better_light">💡 Try in better lighting</string>
+    <string name="hint_try_angle">Try a different angle</string>
+    <string name="hint_better_light">Try in better lighting</string>
     <string name="attempt_count">Attempt %1$d</string>
     <string name="new_object_suggested">New object: %1$s</string>
     <string name="splash_tagline">Alarmko: No more excuses.</string>
 
     <string name="no_history">No history yet</string>
-    <string name="mission_success">✅ Mission completed</string>
-    <string name="mission_failed">❌ Mission not completed</string>
+    <string name="mission_success">Mission completed</string>
+    <string name="mission_failed">Mission not completed</string>
 
     <string name="best_streak_prefix">Best:</string>
 
-    <string name="mission_success_title">Well done! 💪</string>
+    <string name="mission_success_title">Well done!</string>
     <string name="mission_success_message">Mission completed successfully!</string>
 
+    <!-- Permissions on first launch -->
+    <string name="permission_dialog_title">Alarmko needs access</string>
+    <string name="permission_dialog_message">To wake you up reliably, we will set everything up. Tap "Allow all" and follow the steps.</string>
+    <string name="permission_dialog_button">Allow all</string>
+
+    <string name="repeat_once">One time</string>
+    <string name="repeat_daily">Every day</string>
+    <string name="repeat_weekly">Weekly</string>
+
+    <string name="repeat_weekdays">Mon — Fri</string>
 </resources>

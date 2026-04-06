@@ -175,20 +175,28 @@
     <string name="select_category">Избери категория за снимане</string>
     <string name="error_no_category">Моля избери категория за камера мисията</string>
 
-    <string name="hint_try_angle">💡 Пробвай от друг ъгъл</string>
-    <string name="hint_better_light">💡 Опитай на по-добра светлина</string>
+    <string name="hint_try_angle">Пробвай от друг ъгъл</string>
+    <string name="hint_better_light">Опитай на по-добра светлина</string>
     <string name="attempt_count">Опит %1$d</string>
     <string name="new_object_suggested">Нов обект: %1$s</string>
     <string name="splash_tagline">Alarmko: No more excuses.</string>
 
     <string name="no_history">Няма история все още</string>
-    <string name="mission_success">✅ Мисията изпълнена</string>
-    <string name="mission_failed">❌ Мисията не е изпълнена</string>
+    <string name="mission_success">Мисията изпълнена</string>
+    <string name="mission_failed">Мисията не е изпълнена</string>
 
     <string name="best_streak_prefix">Най-добър:</string>
 
-    <string name="mission_success_title">Браво! 💪</string>
+    <string name="mission_success_title">Браво!</string>
     <string name="mission_success_message">Мисията е изпълнена успешно!</string>
+    <!-- Разрешения при първо стартиране -->
+    <string name="permission_dialog_title">Alarmko има нужда от достъп</string>
+    <string name="permission_dialog_message">За да те събудим надеждно, ще настроим всичко необходимо. Натисни „Разреши всичко" и следвай стъпките.</string>
+    <string name="permission_dialog_button">Разреши всичко</string>
 
+    <string name="repeat_once">Еднократно</string>
+    <string name="repeat_daily">Всеки ден</string>
+    <string name="repeat_weekly">Седмично</string>
 
+    <string name="repeat_weekdays">Пон — Пет</string>
 </resources>

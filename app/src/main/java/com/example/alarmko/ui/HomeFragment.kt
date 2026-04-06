@@ -89,7 +89,7 @@ class HomeFragment : Fragment() {
             } else {
                 tvNextAlarmTime.text = TimeUtils.formatTime(nextAlarm.hour, nextAlarm.minute)
                 tvNextAlarmTitle.text = nextAlarm.title
-                chipDays.text = TimeUtils.formatDaysShort(nextAlarm.repeatDays)
+                chipDays.text = TimeUtils.formatDaysShort(nextAlarm.repeatDays, requireContext())
                 chipMission.text = getMissionName(nextAlarm.missionType.name)
                 chipDays.visibility = View.VISIBLE
                 chipMission.visibility = View.VISIBLE
@@ -100,7 +100,7 @@ class HomeFragment : Fragment() {
     private fun observeStreak() {
         repository.allLogs.observe(viewLifecycleOwner) { logs ->
             val streak = calculateStreak(logs.map { it.triggeredAt to it.missionSuccess })
-            tvStreakCount.text = "$streak 🔥"
+            tvStreakCount.text = streak.toString()
             tvBestStreak.text = "${getString(R.string.best_streak_prefix)} $streak ${getString(R.string.days)}"
         }
     }

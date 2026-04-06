@@ -1,5 +1,7 @@
 package com.example.alarmko.utils
 
+import android.content.Context
+import com.example.alarmko.R
 import java.util.Calendar
 
 object TimeUtils {
@@ -34,14 +36,20 @@ object TimeUtils {
         }
     }
 
-    fun formatDaysShort(repeatDays: String): String {
-        if (repeatDays.isEmpty()) return "Еднократно"
-        if (repeatDays == "1234567") return "Всеки ден"
-        if (repeatDays == "12345") return "Пон - Пет"
+    // Добавихме context за да четем strings вместо hardcoded текст
+    fun formatDaysShort(repeatDays: String, context: Context): String {
+        if (repeatDays.isEmpty()) return context.getString(R.string.repeat_once)
+        if (repeatDays == "1234567") return context.getString(R.string.repeat_daily)
+        if (repeatDays == "12345") return context.getString(R.string.repeat_weekdays)
 
         val dayNames = mapOf(
-            '1' to "Пн", '2' to "Вт", '3' to "Ср",
-            '4' to "Чт", '5' to "Пт", '6' to "Сб", '7' to "Нд"
+            '1' to context.getString(R.string.monday),
+            '2' to context.getString(R.string.tuesday),
+            '3' to context.getString(R.string.wednesday),
+            '4' to context.getString(R.string.thursday),
+            '5' to context.getString(R.string.friday),
+            '6' to context.getString(R.string.saturday),
+            '7' to context.getString(R.string.sunday)
         )
         return repeatDays.map { dayNames[it] }.joinToString(" ")
     }

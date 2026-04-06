@@ -14,7 +14,7 @@ import com.example.alarmko.data.model.CameraSettings
 
 @Database(
     entities = [Alarm::class, AlarmLog::class, BedtimeSettings::class, CameraSettings::class],
-    version = 3,
+    version = 4,
     exportSchema = false
 )
 @TypeConverters(Converters::class)
@@ -45,6 +45,31 @@ abstract class AppDatabase : RoomDatabase() {
                 )
             }
         }
+        val MIGRATION_3_4 = object : Migration(3, 4) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                // Създаваме нова таблица с правилната структура
+                database.execSQL("""
+            CREATE TABLE alarm_log_new (
+                id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                alarmId INTEGER,
+                triggeredAt INTEGER NOT NULL,
+                completedAt INTEGER,
+                missionSuccess INTEGER NOT NULL DEFAULT 0,
+                snoozedCount INTEGER NOT NULL DEFAULT 0,
+                FOREIGN KEY(alarmId) REFERENCES alarms(id) ON DELETE SET NULL
+            )
+        """)
+                // Копираме данните
+                database.execSQL("""
+            INSERT INTO alarm_log_new 
+            SELECT * FROM alarm_log
+        """)
+                // Изтриваме старата таблица
+                database.execSQL("DROP TABLE alarm_log")
+                // Преименуваме новата
+                database.execSQL("ALTER TABLE alarm_log_new RENAME TO alarm_log")
+            }
+        }
 
         @Volatile
         private var INSTANCE: AppDatabase? = null
@@ -57,7 +82,7 @@ abstract class AppDatabase : RoomDatabase() {
                         AppDatabase::class.java,
                         "alarmko_database"
                     )
-                        .addMigrations(MIGRATION_1_2,  MIGRATION_2_3)
+                        .addMigrations(MIGRATION_1_2,  MIGRATION_2_3, MIGRATION_3_4)
                         .build()
                     INSTANCE = instance
                     instance

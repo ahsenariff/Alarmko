@@ -168,6 +168,7 @@ class AlarmRingActivity : AppCompatActivity() {
 
     private fun setupWindowFlags() {
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
             setShowWhenLocked(true)
             setTurnScreenOn(true)
@@ -177,6 +178,13 @@ class AlarmRingActivity : AppCompatActivity() {
                 WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED or
                         WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
             )
+        }
+
+        // За Android 8+ — отключи keyguard
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val keyguardManager = getSystemService(KEYGUARD_SERVICE)
+                    as android.app.KeyguardManager
+            keyguardManager.requestDismissKeyguard(this, null)
         }
     }
 

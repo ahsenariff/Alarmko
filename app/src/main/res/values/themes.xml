@@ -15,6 +15,7 @@
         <item name="colorSecondaryContainer">#FAEEDA</item>
         <item name="colorSurface">#FFFFFF</item>
         <item name="colorOnSurface">#1A1A1A</item>
+        <item name="android:windowLightStatusBar">true</item>
     </style>
     <style name="Theme.Alarmko.NoActionBar" parent="Theme.Alarmko">
         <item name="windowActionBar">false</item>

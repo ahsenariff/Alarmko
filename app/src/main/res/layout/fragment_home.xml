@@ -10,7 +10,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:paddingTop="56dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="16dp">
 
         <!-- Поздрав -->
         <TextView
@@ -129,7 +132,7 @@
             android:layout_height="wrap_content"
             app:cardCornerRadius="16dp"
             app:cardElevation="0dp"
-            app:cardBackgroundColor="#FAEEDA"
+            app:cardBackgroundColor="?attr/colorSecondaryContainer"
             android:layout_marginBottom="16dp">
 
             <LinearLayout
@@ -149,17 +152,17 @@
                         android:id="@+id/tvStreakCount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0 🔥"
+                        android:text="0 "
                         android:textSize="28sp"
                         android:textStyle="bold"
-                        android:textColor="#854F0B"/>
+                        android:textColor="?attr/colorOnSecondaryContainer"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/streak_label"
                         android:textSize="12sp"
-                        android:textColor="#854F0B"/>
+                        android:textColor="?attr/colorOnSecondaryContainer"/>
 
                 </LinearLayout>
 
@@ -168,7 +171,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="12sp"
-                    android:textColor="#854F0B"/>
+                    android:textColor="?attr/colorOnSecondaryContainer"/>
 
             </LinearLayout>
 

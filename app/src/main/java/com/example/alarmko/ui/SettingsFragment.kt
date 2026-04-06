@@ -56,6 +56,29 @@ class SettingsFragment : Fragment() {
 
         loadSettings(view)
         setupSwitchListeners(view)
+        setupThemeSwitch(view)
+    }
+
+    private fun setupThemeSwitch(view: View) {
+        val switchDark = view.findViewById<SwitchMaterial>(R.id.switchDarkTheme)
+
+        // Четем текущата тема от SharedPreferences
+        val prefs = requireContext().getSharedPreferences("alarmko_prefs", 0)
+        val isDark = prefs.getBoolean("dark_theme", false)
+        switchDark.isChecked = isDark
+
+        switchDark.setOnCheckedChangeListener { _, isChecked ->
+            // Запазваме избора
+            prefs.edit().putBoolean("dark_theme", isChecked).apply()
+
+            // Прилагаме темата веднага
+            val mode = if (isChecked) {
+                androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
+            } else {
+                androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
+            }
+            androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode(mode)
+        }
     }
 
     private fun loadSettings(view: View) {

@@ -38,7 +38,7 @@ class AlarmAdapter(
 
         fun bind(alarm: Alarm) {
             tvTime.text = TimeUtils.formatTime(alarm.hour, alarm.minute)
-            tvDays.text = TimeUtils.formatDaysShort(alarm.repeatDays)
+            tvDays.text = TimeUtils.formatDaysShort(alarm.repeatDays, itemView.context)
             tvTitle.text = alarm.title
 
             chipMission.text = when (alarm.missionType.name) {

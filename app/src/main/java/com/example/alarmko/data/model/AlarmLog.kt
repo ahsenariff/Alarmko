@@ -10,13 +10,13 @@ import androidx.room.PrimaryKey
         entity = Alarm::class,
         parentColumns = ["id"],
         childColumns = ["alarmId"],
-        onDelete = ForeignKey.CASCADE
+        onDelete = ForeignKey.SET_NULL
     )]
 )
 data class AlarmLog(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
-    val alarmId: Int,
+    val alarmId: Int? = null,
     val triggeredAt: Long,
     val completedAt: Long? = null,
     val missionSuccess: Boolean = false,

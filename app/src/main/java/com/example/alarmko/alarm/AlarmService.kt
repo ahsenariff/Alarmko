@@ -66,9 +66,18 @@ class AlarmService : Service() {
     }
 
     private fun buildNotification(alarmId: Int): Notification {
-        val openIntent = Intent(this, AlarmService::class.java)
-        val pendingIntent = PendingIntent.getActivity(
-            this, alarmId, openIntent,
+        val fullScreenIntent = Intent(this, Class.forName(
+            "com.example.alarmko.ui.AlarmRingActivity"
+        )).apply {
+            putExtra("ALARM_ID", alarmId)
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or
+                    Intent.FLAG_ACTIVITY_NO_USER_ACTION
+        }
+
+        val fullScreenPendingIntent = PendingIntent.getActivity(
+            this,
+            alarmId,
+            fullScreenIntent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
@@ -78,7 +87,7 @@ class AlarmService : Service() {
             .setOngoing(true)
             .setCategory(NotificationCompat.CATEGORY_ALARM)
             .setPriority(NotificationCompat.PRIORITY_MAX)
-            .setFullScreenIntent(pendingIntent, true)
+            .setFullScreenIntent(fullScreenPendingIntent, true)
             .build()
     }
 

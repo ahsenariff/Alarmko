@@ -14,6 +14,7 @@
         <item name="colorOnSecondary">#412402</item>
         <item name="colorSecondaryContainer">#633806</item>
         <item name="colorSurface">#1A1A1A</item>
+        <item name="android:windowLightStatusBar">true</item>
         <item name="colorOnSurface">#E8E8E8</item>
     </style>
 
