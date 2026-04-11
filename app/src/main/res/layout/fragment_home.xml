@@ -15,16 +15,31 @@
         android:paddingEnd="16dp"
         android:paddingBottom="16dp">
 
-        <!-- Поздрав -->
-        <TextView
-            android:id="@+id/tvGreeting"
-            android:layout_width="wrap_content"
+        <!-- Поздрав + икона -->
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/good_morning"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:textColor="?attr/colorOnSurface"
-            android:layout_marginTop="16dp"/>
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="16dp">
+
+            <TextView
+                android:id="@+id/tvGreeting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/good_morning"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="?attr/colorOnSurface"/>
+
+            <ImageView
+                android:id="@+id/ivGreetingIcon"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_marginStart="8dp"
+                android:src="@drawable/ic_sun"/>
+
+        </LinearLayout>
 
         <!-- Дата -->
         <TextView
@@ -69,6 +84,15 @@
                     android:textStyle="bold"
                     android:textColor="?attr/colorOnSurface"
                     android:layout_marginTop="4dp"/>
+
+                <TextView
+                    android:id="@+id/tvTimeUntil"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="13sp"
+                    android:textColor="?attr/colorPrimary"
+                    android:layout_marginTop="2dp"
+                    android:visibility="gone"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -118,11 +142,13 @@
             android:textColor="?attr/colorOnSurface"
             android:layout_marginBottom="8dp"/>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvTodayTasks"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/tvNoTasksToday"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:nestedScrollingEnabled="false"
+            android:text="@string/no_tasks_today"
+            android:textSize="14sp"
+            android:textColor="?attr/colorOnSurfaceVariant"
             android:layout_marginBottom="16dp"/>
 
         <!-- Streak карта -->
@@ -152,7 +178,7 @@
                         android:id="@+id/tvStreakCount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0 "
+                        android:text="0"
                         android:textSize="28sp"
                         android:textStyle="bold"
                         android:textColor="?attr/colorOnSecondaryContainer"/>

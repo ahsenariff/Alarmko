@@ -3,6 +3,7 @@ package com.example.alarmko.ui
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -25,9 +26,9 @@ class HistoryAdapter : ListAdapter<AlarmLog, HistoryAdapter.HistoryViewHolder>(H
         holder.bind(getItem(position))
     }
 
-    inner class HistoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class HistoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        private val tvIcon: TextView = itemView.findViewById(R.id.tvHistoryIcon)
+        private val ivIcon: ImageView = itemView.findViewById(R.id.ivHistoryIcon)
         private val tvDate: TextView = itemView.findViewById(R.id.tvHistoryDate)
         private val tvStatus: TextView = itemView.findViewById(R.id.tvHistoryStatus)
 
@@ -36,10 +37,10 @@ class HistoryAdapter : ListAdapter<AlarmLog, HistoryAdapter.HistoryViewHolder>(H
             tvDate.text = dateFormat.format(Date(log.triggeredAt))
 
             if (log.missionSuccess) {
-                tvIcon.text = "✅"
+                ivIcon.setImageResource(R.drawable.ic_check)
                 tvStatus.text = itemView.context.getString(R.string.mission_success)
             } else {
-                tvIcon.text = "❌"
+                ivIcon.setImageResource(R.drawable.ic_error)
                 tvStatus.text = itemView.context.getString(R.string.mission_failed)
             }
         }

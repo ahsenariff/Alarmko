@@ -199,4 +199,25 @@
     <string name="repeat_weekly">Седмично</string>
 
     <string name="repeat_weekdays">Пон — Пет</string>
+    <string name="edit_alarm_title">Редактирай аларма</string>
+
+    <string name="step_mission_title">Стани и се раздвижи!</string>
+    <string name="step_target">Цел: %1$d стъпки</string>
+    <string name="steps_label">стъпки</string>
+
+    <string name="time_until_alarm">след %1$s</string>
+
+    <string name="select_step_target">Брой стъпки</string>
+
+    <string name="hours_short">ч</string>
+    <string name="minutes_short">мин</string>
+
+    <string name="days_short">д</string>
+
+    <string name="select_difficulty">Трудност</string>
+    <string name="difficulty_easy">Лесно</string>
+    <string name="difficulty_medium">Средно</string>
+    <string name="difficulty_hard">Трудно</string>
+
+    <string name="no_tasks_today">Няма задачи за днес</string>
 </resources>

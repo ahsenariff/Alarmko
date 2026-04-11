@@ -61,7 +61,10 @@ class AlarmsFragment : Fragment() {
                 }
             },
             onClick = { alarm ->
-                // TODO: навигация към редактиране
+                val bundle = Bundle().apply {
+                    putInt("ALARM_ID", alarm.id)
+                }
+                findNavController().navigate(R.id.createAlarmFragment, bundle)
             }
         )
         rvAlarms.layoutManager = LinearLayoutManager(requireContext())

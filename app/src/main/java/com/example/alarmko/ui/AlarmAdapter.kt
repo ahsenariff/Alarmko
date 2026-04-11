@@ -34,21 +34,20 @@ class AlarmAdapter(
         private val tvDays: TextView = itemView.findViewById(R.id.tvAlarmDays)
         private val tvTitle: TextView = itemView.findViewById(R.id.tvAlarmTitle)
         private val switchAlarm: SwitchMaterial = itemView.findViewById(R.id.switchAlarm)
-        private val chipMission: Chip = itemView.findViewById(R.id.chipAlarmMission)
+        private val ivMission: android.widget.ImageView = itemView.findViewById(R.id.ivMissionIcon)
 
         fun bind(alarm: Alarm) {
             tvTime.text = TimeUtils.formatTime(alarm.hour, alarm.minute)
             tvDays.text = TimeUtils.formatDaysShort(alarm.repeatDays, itemView.context)
             tvTitle.text = alarm.title
 
-            chipMission.text = when (alarm.missionType.name) {
-                "MATH" -> itemView.context.getString(R.string.mission_math)
-                "SHAKE" -> itemView.context.getString(R.string.mission_shake)
-                "QR_CODE" -> itemView.context.getString(R.string.mission_qr)
-                "PHOTO" -> itemView.context.getString(R.string.mission_photo)
-                "STEPS" -> itemView.context.getString(R.string.mission_steps)
-                else -> ""
+            val iconRes = when (alarm.missionType.name) {
+                "MATH" -> R.drawable.ic_mission_math
+                "PHOTO" -> R.drawable.ic_mission_photo
+                "STEPS" -> R.drawable.ic_mission_steps
+                else -> R.drawable.ic_mission_math
             }
+            ivMission.setImageResource(iconRes)
 
             tvTime.alpha = if (alarm.isActive) 1f else 0.4f
             tvTitle.alpha = if (alarm.isActive) 1f else 0.4f

@@ -33,13 +33,13 @@
     <string name="repeat_days">Repeat</string>
 
     <!-- Days -->
-    <string name="monday">Mo</string>
-    <string name="tuesday">Tu</string>
-    <string name="wednesday">We</string>
-    <string name="thursday">Th</string>
-    <string name="friday">Fr</string>
-    <string name="saturday">Sa</string>
-    <string name="sunday">Su</string>
+    <string name="monday">Mon</string>
+    <string name="tuesday">Tue</string>
+    <string name="wednesday">Wed</string>
+    <string name="thursday">Thu</string>
+    <string name="friday">Fri</string>
+    <string name="saturday">Sat</string>
+    <string name="sunday">Sun</string>
 
     <!-- Missions -->
     <string name="mission_math">Math</string>
@@ -200,4 +200,23 @@
     <string name="repeat_weekly">Weekly</string>
 
     <string name="repeat_weekdays">Mon — Fri</string>
+    <string name="edit_alarm_title">Edit alarm</string>
+
+    <string name="step_mission_title">Get up and move!</string>
+    <string name="step_target">Goal: %1$d steps</string>
+    <string name="steps_label">steps</string>
+    <string name="select_step_target">Number of steps</string>
+    <string name="time_until_alarm">in %1$s</string>
+
+    <string name="hours_short">h</string>
+    <string name="minutes_short">min</string>
+
+    <string name="days_short">d</string>
+
+    <string name="select_difficulty">Difficulty</string>
+    <string name="difficulty_easy">Easy</string>
+    <string name="difficulty_medium">Medium</string>
+    <string name="difficulty_hard">Hard</string>
+
+    <string name="no_tasks_today">No tasks for today</string>
 </resources>

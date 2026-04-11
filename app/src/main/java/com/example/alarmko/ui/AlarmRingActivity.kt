@@ -18,6 +18,7 @@ import com.example.alarmko.data.model.MissionType
 import com.example.alarmko.data.repository.AlarmRepository
 import com.example.alarmko.missions.MathMissionFragment
 import com.example.alarmko.missions.PhotoMissionFragment
+import com.example.alarmko.missions.StepMissionFragment
 import com.google.android.material.button.MaterialButton
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -48,13 +49,16 @@ class AlarmRingActivity : AppCompatActivity() {
     }
 
     private fun setupUI() {
+        val hourOverride = intent.getIntExtra("ALARM_HOUR_OVERRIDE", -1)
+        val minuteOverride = intent.getIntExtra("ALARM_MINUTE_OVERRIDE", -1)
+
         lifecycleScope.launch {
             val alarm = repository.getAlarmById(alarmId) ?: run {
                 finish()
                 return@launch
             }
 
-            currentAlarm = alarm  // ← запазваме за по-късно
+            currentAlarm = alarm
 
             runOnUiThread {
                 val tvTime = findViewById<TextView>(R.id.tvTime)
@@ -63,20 +67,17 @@ class AlarmRingActivity : AppCompatActivity() {
                 val btnStartMission = findViewById<MaterialButton>(R.id.btnStartMission)
                 val btnSnooze = findViewById<MaterialButton>(R.id.btnSnooze)
 
-                tvTime.text = String.format("%02d:%02d", alarm.hour, alarm.minute)
+                // Показваме override часа ако има такъв (при snooze)
+                val displayHour = if (hourOverride != -1) hourOverride else alarm.hour
+                val displayMinute = if (minuteOverride != -1) minuteOverride else alarm.minute
+                tvTime.text = String.format("%02d:%02d", displayHour, displayMinute)
 
                 val dateFormat = SimpleDateFormat("EEEE, d MMMM", Locale.getDefault())
                 tvDate.text = dateFormat.format(Date())
-
                 tvTaskDescription.text = alarm.title
 
-                btnSnooze.setOnClickListener {
-                    snoozeAlarm()
-                }
-
-                btnStartMission.setOnClickListener {
-                    startMission(alarm)  // ← подаваме цялата аларма
-                }
+                btnSnooze.setOnClickListener { snoozeAlarm() }
+                btnStartMission.setOnClickListener { startMission(alarm) }
             }
         }
     }
@@ -85,17 +86,15 @@ class AlarmRingActivity : AppCompatActivity() {
         try {
             val scheduler = AlarmScheduler(this)
             val snoozeTimeMillis = System.currentTimeMillis() + (5 * 60 * 1000L)
+            val snoozeHour = getHourFromMillis(snoozeTimeMillis)
+            val snoozeMinute = getMinuteFromMillis(snoozeTimeMillis)
 
-            // Създаваме временна аларма за след 5 минути
             val snoozeAlarm = currentAlarm?.copy(
                 id = alarmId,
-                hour = getHourFromMillis(snoozeTimeMillis),
-                minute = getMinuteFromMillis(snoozeTimeMillis)
+                hour = snoozeHour,
+                minute = snoozeMinute
             )
-
-            snoozeAlarm?.let {
-                scheduler.schedule(it)
-            }
+            snoozeAlarm?.let { scheduler.schedule(it) }
 
         } catch (e: Exception) {
             e.printStackTrace()
@@ -124,6 +123,7 @@ class AlarmRingActivity : AppCompatActivity() {
 
         val fragment = when (alarm.missionType) {
             MissionType.MATH -> MathMissionFragment().also { mission ->
+                mission.setDifficulty(alarm.missionDifficulty)
                 mission.setOnMissionSuccessListener {
                     onMissionSuccess()
                 }
@@ -132,6 +132,12 @@ class AlarmRingActivity : AppCompatActivity() {
                 // Подаваме категорията и repository-то
                 mission.setPhotoCategory(alarm.photoCategory)
                 mission.setRepository(repository)
+                mission.setOnMissionSuccessListener {
+                    onMissionSuccess()
+                }
+            }
+            MissionType.STEPS -> StepMissionFragment().also { mission ->
+                mission.setStepTarget(alarm.stepTarget)
                 mission.setOnMissionSuccessListener {
                     onMissionSuccess()
                 }

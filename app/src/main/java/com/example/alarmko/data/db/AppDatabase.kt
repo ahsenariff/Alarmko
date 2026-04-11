@@ -14,7 +14,7 @@ import com.example.alarmko.data.model.CameraSettings
 
 @Database(
     entities = [Alarm::class, AlarmLog::class, BedtimeSettings::class, CameraSettings::class],
-    version = 4,
+    version = 5,
     exportSchema = false
 )
 @TypeConverters(Converters::class)
@@ -70,6 +70,13 @@ abstract class AppDatabase : RoomDatabase() {
                 database.execSQL("ALTER TABLE alarm_log_new RENAME TO alarm_log")
             }
         }
+        val MIGRATION_4_5 = object : Migration(4, 5) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL(
+                    "ALTER TABLE alarms ADD COLUMN stepTarget INTEGER NOT NULL DEFAULT 20"
+                )
+            }
+        }
 
         @Volatile
         private var INSTANCE: AppDatabase? = null
@@ -82,7 +89,7 @@ abstract class AppDatabase : RoomDatabase() {
                         AppDatabase::class.java,
                         "alarmko_database"
                     )
-                        .addMigrations(MIGRATION_1_2,  MIGRATION_2_3, MIGRATION_3_4)
+                        .addMigrations(MIGRATION_1_2,  MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5)
                         .build()
                     INSTANCE = instance
                     instance

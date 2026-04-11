@@ -18,6 +18,14 @@
         android:layout_marginBottom="24dp"/>
 
     <TextView
+        android:id="@+id/tvDifficulty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="13sp"
+        android:textColor="?attr/colorPrimary"
+        android:layout_marginBottom="8dp"/>
+
+    <TextView
         android:id="@+id/tvMathQuestion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

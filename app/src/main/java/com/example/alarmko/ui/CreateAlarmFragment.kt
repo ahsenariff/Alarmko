@@ -36,10 +36,16 @@ class CreateAlarmFragment : Fragment() {
     private lateinit var chipGroupCategories: ChipGroup
     private lateinit var layoutPhotoCategory: LinearLayout
     private lateinit var btnSaveAlarm: MaterialButton
-
     private lateinit var repository: AlarmRepository
     private lateinit var scheduler: AlarmScheduler
+    private lateinit var layoutStepTarget: LinearLayout
+    private lateinit var chipGroupSteps: ChipGroup
 
+    private lateinit var layoutDifficulty: LinearLayout
+
+    private lateinit var chipGroupDifficulty: ChipGroup
+
+    private var editingAlarmId: Int = -1
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -55,6 +61,16 @@ class CreateAlarmFragment : Fragment() {
         scheduler = AlarmScheduler(requireContext())
 
         initViews(view)
+
+        val alarmId = arguments?.getInt("ALARM_ID", -1) ?: -1
+        if (alarmId != -1) {
+            editingAlarmId = alarmId
+            loadAlarm(alarmId)
+            // Сменяме заглавието на toolbar-а
+            view.findViewById<com.google.android.material.appbar.MaterialToolbar>(R.id.toolbar)
+                .title = getString(R.string.edit_alarm_title)
+        }
+
         setupMissionListener()
 
         btnSaveAlarm.setOnClickListener {
@@ -96,15 +112,31 @@ class CreateAlarmFragment : Fragment() {
         layoutPhotoCategory = view.findViewById(R.id.layoutPhotoCategory)
         btnSaveAlarm = view.findViewById(R.id.btnSaveAlarm)
 
+        layoutStepTarget = view.findViewById(R.id.layoutStepTarget)
+        chipGroupSteps = view.findViewById(R.id.chipGroupSteps)
+        layoutDifficulty = view.findViewById(R.id.layoutDifficulty)
+        chipGroupDifficulty = view.findViewById(R.id.chipGroupDifficulty)
     }
 
     private fun setupMissionListener() {
         chipGroupMissions.setOnCheckedStateChangeListener { _, checkedIds ->
+            // Показваме/скриваме категориите за снимане
             if (checkedIds.contains(R.id.chipMissionPhoto)) {
                 layoutPhotoCategory.visibility = View.VISIBLE
             } else {
                 layoutPhotoCategory.visibility = View.GONE
                 chipGroupCategories.clearCheck()
+            }
+            // Показваме/скриваме избора на стъпки
+            if (checkedIds.contains(R.id.chipMissionSteps)) {
+                layoutStepTarget.visibility = View.VISIBLE
+            } else {
+                layoutStepTarget.visibility = View.GONE
+            }
+            if (checkedIds.contains(R.id.chipMissionMath)) {
+                layoutDifficulty.visibility = View.VISIBLE
+            } else {
+                layoutDifficulty.visibility = View.GONE
             }
         }
     }
@@ -135,14 +167,25 @@ class CreateAlarmFragment : Fragment() {
                 missionType = missionType,
                 notifyBeforeMinutes = notifyBefore,
                 photoCategory = photoCategory?.name,
+                stepTarget = getSelectedStepTarget(),
+                missionDifficulty = getSelectedDifficulty(),
                 isActive = true
             )
 
             lifecycleScope.launch {
                 try {
-                    val id = repository.insertAlarm(alarm)
-                    val savedAlarm = alarm.copy(id = id.toInt())
-                    scheduler.schedule(savedAlarm)
+                    if (editingAlarmId == -1) {
+                        // Нова аларма
+                        val id = repository.insertAlarm(alarm)
+                        val savedAlarm = alarm.copy(id = id.toInt())
+                        scheduler.schedule(savedAlarm)
+                    } else {
+                        // Редактиране на съществуваща
+                        val updatedAlarm = alarm.copy(id = editingAlarmId)
+                        repository.updateAlarm(updatedAlarm)
+                        scheduler.cancel(updatedAlarm)
+                        scheduler.schedule(updatedAlarm)
+                    }
                     requireActivity().runOnUiThread {
                         Toast.makeText(
                             requireContext(),
@@ -189,6 +232,7 @@ class CreateAlarmFragment : Fragment() {
         return when (chipGroupMissions.checkedChipId) {
             R.id.chipMissionMath -> MissionType.MATH
             R.id.chipMissionPhoto -> MissionType.PHOTO
+            R.id.chipMissionSteps -> MissionType.STEPS
             else -> null
         }
     }
@@ -204,6 +248,15 @@ class CreateAlarmFragment : Fragment() {
         }
     }
 
+    private fun getSelectedStepTarget(): Int {
+        return when (chipGroupSteps.checkedChipId) {
+            R.id.chipSteps10 -> 10
+            R.id.chipSteps30 -> 30
+            R.id.chipSteps50 -> 50
+            else -> 20
+        }
+    }
+
     private fun getNotifyBefore(): Int {
         return when (chipGroupNotify.checkedChipId) {
             R.id.chipNotify5 -> 5
@@ -211,6 +264,83 @@ class CreateAlarmFragment : Fragment() {
             R.id.chipNotify15 -> 15
             R.id.chipNotify30 -> 30
             else -> 0
+        }
+    }
+    private fun getSelectedDifficulty(): Int {
+        return when (chipGroupDifficulty.checkedChipId) {
+            R.id.chipDifficultyMedium -> 2
+            R.id.chipDifficultyHard -> 3
+            else -> 1
+        }
+    }
+
+    private fun loadAlarm(alarmId: Int) {
+        lifecycleScope.launch {
+            val alarm = repository.getAlarmById(alarmId) ?: return@launch
+            requireActivity().runOnUiThread {
+                // Зареждаме часа
+                pickerHour.value = alarm.hour
+                pickerMinute.value = alarm.minute
+
+                // Зареждаме описанието
+                etTaskDescription.setText(alarm.title)
+
+                // Зареждаме дните
+                alarm.repeatDays.forEach { day ->
+                    when (day) {
+                        '1' -> view?.findViewById<com.google.android.material.chip.Chip>(R.id.chipMon)?.isChecked = true
+                        '2' -> view?.findViewById<com.google.android.material.chip.Chip>(R.id.chipTue)?.isChecked = true
+                        '3' -> view?.findViewById<com.google.android.material.chip.Chip>(R.id.chipWed)?.isChecked = true
+                        '4' -> view?.findViewById<com.google.android.material.chip.Chip>(R.id.chipThu)?.isChecked = true
+                        '5' -> view?.findViewById<com.google.android.material.chip.Chip>(R.id.chipFri)?.isChecked = true
+                        '6' -> view?.findViewById<com.google.android.material.chip.Chip>(R.id.chipSat)?.isChecked = true
+                        '7' -> view?.findViewById<com.google.android.material.chip.Chip>(R.id.chipSun)?.isChecked = true
+                    }
+                }
+
+                // Зареждаме мисията
+                when (alarm.missionType) {
+                    MissionType.MATH -> {
+                        view?.findViewById<com.google.android.material.chip.Chip>(R.id.chipMissionMath)?.isChecked = true
+                        layoutDifficulty.visibility = View.VISIBLE
+                        when (alarm.missionDifficulty) {
+                            2 -> view?.findViewById<com.google.android.material.chip.Chip>(R.id.chipDifficultyMedium)?.isChecked = true
+                            3 -> view?.findViewById<com.google.android.material.chip.Chip>(R.id.chipDifficultyHard)?.isChecked = true
+                            else -> view?.findViewById<com.google.android.material.chip.Chip>(R.id.chipDifficultyEasy)?.isChecked = true
+                        }
+                    }
+                    MissionType.PHOTO -> view?.findViewById<com.google.android.material.chip.Chip>(R.id.chipMissionPhoto)?.isChecked = true
+                    MissionType.STEPS -> {
+                        view?.findViewById<com.google.android.material.chip.Chip>(
+                            R.id.chipMissionSteps
+                        )?.isChecked = true
+                        layoutStepTarget.visibility = View.VISIBLE
+                        when (alarm.stepTarget) {
+                            10 -> view?.findViewById<com.google.android.material.chip.Chip>(R.id.chipSteps10)?.isChecked = true
+                            30 -> view?.findViewById<com.google.android.material.chip.Chip>(R.id.chipSteps30)?.isChecked = true
+                            50 -> view?.findViewById<com.google.android.material.chip.Chip>(R.id.chipSteps50)?.isChecked = true
+                            else -> view?.findViewById<com.google.android.material.chip.Chip>(R.id.chipSteps20)?.isChecked = true
+                        }
+                    }
+                }
+
+                // Зареждаме категорията
+                when (alarm.photoCategory) {
+                    PhotoCategory.KITCHEN.name -> view?.findViewById<com.google.android.material.chip.Chip>(R.id.chipCategoryKitchen)?.isChecked = true
+                    PhotoCategory.BATHROOM.name -> view?.findViewById<com.google.android.material.chip.Chip>(R.id.chipCategoryBathroom)?.isChecked = true
+                    PhotoCategory.HEALTH.name -> view?.findViewById<com.google.android.material.chip.Chip>(R.id.chipCategoryHealth)?.isChecked = true
+                    PhotoCategory.WORKSPACE.name -> view?.findViewById<com.google.android.material.chip.Chip>(R.id.chipCategoryWorkspace)?.isChecked = true
+                    PhotoCategory.LIVING_ROOM.name -> view?.findViewById<com.google.android.material.chip.Chip>(R.id.chipCategoryLivingRoom)?.isChecked = true
+                }
+
+                // Зареждаме известието
+                when (alarm.notifyBeforeMinutes) {
+                    5 -> view?.findViewById<com.google.android.material.chip.Chip>(R.id.chipNotify5)?.isChecked = true
+                    10 -> view?.findViewById<com.google.android.material.chip.Chip>(R.id.chipNotify10)?.isChecked = true
+                    15 -> view?.findViewById<com.google.android.material.chip.Chip>(R.id.chipNotify15)?.isChecked = true
+                    30 -> view?.findViewById<com.google.android.material.chip.Chip>(R.id.chipNotify30)?.isChecked = true
+                }
+            }
         }
     }
 }

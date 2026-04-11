@@ -120,4 +120,20 @@ object PermissionHelper {
             null
         }
     }
+    // Проверява дали има разрешение за разпознаване на физическа активност (Android 10+)
+    fun hasActivityRecognitionPermission(context: Context): Boolean {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            ContextCompat.checkSelfPermission(
+                context,
+                Manifest.permission.ACTIVITY_RECOGNITION
+            ) == PackageManager.PERMISSION_GRANTED
+        } else {
+            true // На Android 9 и по-стари не е нужно разрешение
+        }
+    }
+
+    // Отваря настройките на приложението за ръчно даване на разрешение
+    fun openActivityRecognitionSettings(context: Context) {
+        openAppSettings(context)
+    }
 }

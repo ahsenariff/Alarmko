@@ -1,22 +1,25 @@
 package com.example.alarmko.alarm
+
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.Service
-import android.content.Context
 import android.content.Intent
 import android.media.AudioAttributes
+import android.media.MediaPlayer
 import android.media.RingtoneManager
+import android.os.Build
 import android.os.IBinder
 import android.os.PowerManager
 import androidx.core.app.NotificationCompat
 import com.example.alarmko.R
+import com.example.alarmko.ui.AlarmRingActivity
 
 class AlarmService : Service() {
 
     private var wakeLock: PowerManager.WakeLock? = null
-    private var mediaPlayer: android.media.MediaPlayer? = null
+    private var mediaPlayer: MediaPlayer? = null
 
     companion object {
         const val CHANNEL_ID = "alarmko_alarm_channel"
@@ -26,20 +29,23 @@ class AlarmService : Service() {
     override fun onCreate() {
         super.onCreate()
         createNotificationChannel()
-        acquireWakeLock()
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         val alarmId = intent?.getIntExtra("ALARM_ID", -1) ?: -1
+        val hourOverride = intent?.getIntExtra("ALARM_HOUR_OVERRIDE", -1) ?: -1
+        val minuteOverride = intent?.getIntExtra("ALARM_MINUTE_OVERRIDE", -1) ?: -1
+
         if (alarmId == -1) {
             stopSelf()
             return START_NOT_STICKY
         }
 
-        val notification = buildNotification(alarmId)
+        acquireWakeLock()
+        val notification = buildNotification(alarmId, hourOverride, minuteOverride)
         startForeground(NOTIFICATION_ID, notification)
         startRingtone()
-        showAlarmScreen(alarmId)
+        showAlarmScreen(alarmId, hourOverride, minuteOverride)
 
         return START_NOT_STICKY
     }
@@ -60,18 +66,20 @@ class AlarmService : Service() {
         ).apply {
             setSound(null, null)
             enableVibration(false)
+            lockscreenVisibility = Notification.VISIBILITY_PUBLIC
         }
         val manager = getSystemService(NotificationManager::class.java)
         manager.createNotificationChannel(channel)
     }
 
-    private fun buildNotification(alarmId: Int): Notification {
-        val fullScreenIntent = Intent(this, Class.forName(
-            "com.example.alarmko.ui.AlarmRingActivity"
-        )).apply {
+    private fun buildNotification(alarmId: Int, hour: Int = -1, minute: Int = -1): Notification {
+        val fullScreenIntent = Intent(this, AlarmRingActivity::class.java).apply {
             putExtra("ALARM_ID", alarmId)
+            if (hour != -1) putExtra("ALARM_HOUR_OVERRIDE", hour)
+            if (minute != -1) putExtra("ALARM_MINUTE_OVERRIDE", minute)
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or
-                    Intent.FLAG_ACTIVITY_NO_USER_ACTION
+                    Intent.FLAG_ACTIVITY_NO_USER_ACTION or
+                    Intent.FLAG_ACTIVITY_SINGLE_TOP
         }
 
         val fullScreenPendingIntent = PendingIntent.getActivity(
@@ -88,16 +96,18 @@ class AlarmService : Service() {
             .setCategory(NotificationCompat.CATEGORY_ALARM)
             .setPriority(NotificationCompat.PRIORITY_MAX)
             .setFullScreenIntent(fullScreenPendingIntent, true)
+            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
             .build()
     }
 
-    private fun showAlarmScreen(alarmId: Int) {
-        val intent = Intent(this, Class.forName(
-            "com.example.alarmko.ui.AlarmRingActivity"
-        )).apply {
+    private fun showAlarmScreen(alarmId: Int, hour: Int = -1, minute: Int = -1) {
+        val intent = Intent(this, AlarmRingActivity::class.java).apply {
             putExtra("ALARM_ID", alarmId)
+            if (hour != -1) putExtra("ALARM_HOUR_OVERRIDE", hour)
+            if (minute != -1) putExtra("ALARM_MINUTE_OVERRIDE", minute)
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or
-                    Intent.FLAG_ACTIVITY_NO_USER_ACTION
+                    Intent.FLAG_ACTIVITY_NO_USER_ACTION or
+                    Intent.FLAG_ACTIVITY_SINGLE_TOP
         }
         startActivity(intent)
     }
@@ -105,7 +115,7 @@ class AlarmService : Service() {
     private fun startRingtone() {
         try {
             val uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
-            mediaPlayer = android.media.MediaPlayer().apply {
+            mediaPlayer = MediaPlayer().apply {
                 setDataSource(applicationContext, uri)
                 setAudioAttributes(
                     AudioAttributes.Builder()
@@ -134,11 +144,21 @@ class AlarmService : Service() {
 
     private fun acquireWakeLock() {
         val powerManager = getSystemService(POWER_SERVICE) as PowerManager
+
+        @Suppress("DEPRECATION")
+        val lockLevel = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
+            PowerManager.PARTIAL_WAKE_LOCK
+        } else {
+            PowerManager.FULL_WAKE_LOCK or
+                    PowerManager.ACQUIRE_CAUSES_WAKEUP or
+                    PowerManager.ON_AFTER_RELEASE
+        }
+
         wakeLock = powerManager.newWakeLock(
-            PowerManager.PARTIAL_WAKE_LOCK,
+            lockLevel,
             "Alarmko::AlarmWakeLock"
         ).apply {
-            acquire(10 * 60 * 1000L) // максимум 10 минути
+            acquire(10 * 60 * 1000L)
         }
     }
 

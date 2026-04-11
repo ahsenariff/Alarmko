@@ -27,8 +27,9 @@ class HomeFragment : Fragment() {
     private lateinit var tvBestStreak: TextView
     private lateinit var chipDays: Chip
     private lateinit var chipMission: Chip
-
     private lateinit var repository: AlarmRepository
+
+    private lateinit var tvTimeUntil: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -58,15 +59,18 @@ class HomeFragment : Fragment() {
         tvBestStreak = view.findViewById(R.id.tvBestStreak)
         chipDays = view.findViewById(R.id.chipDays)
         chipMission = view.findViewById(R.id.chipMission)
+        tvTimeUntil = view.findViewById(R.id.tvTimeUntil)
     }
 
     private fun setGreetingAndDate() {
         val hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
-        tvGreeting.text = when {
-            hour < 12 -> getString(R.string.good_morning)
-            hour < 18 -> getString(R.string.good_afternoon)
-            else -> getString(R.string.good_evening)
+        val (greetingText, greetingIcon) = when {
+            hour < 12 -> Pair(getString(R.string.good_morning), R.drawable.ic_sun)
+            hour < 18 -> Pair(getString(R.string.good_afternoon), R.drawable.ic_afternoon)
+            else -> Pair(getString(R.string.good_evening), R.drawable.ic_moon)
         }
+        tvGreeting.text = greetingText
+        view?.findViewById<android.widget.ImageView>(R.id.ivGreetingIcon)?.setImageResource(greetingIcon)
 
         val dateFormat = SimpleDateFormat("EEEE, d MMMM", Locale.getDefault())
         tvDate.text = dateFormat.format(Date())
@@ -86,6 +90,7 @@ class HomeFragment : Fragment() {
                 chipMission.text = ""
                 chipDays.visibility = View.GONE
                 chipMission.visibility = View.GONE
+                tvTimeUntil.visibility = View.GONE
             } else {
                 tvNextAlarmTime.text = TimeUtils.formatTime(nextAlarm.hour, nextAlarm.minute)
                 tvNextAlarmTitle.text = nextAlarm.title
@@ -93,6 +98,9 @@ class HomeFragment : Fragment() {
                 chipMission.text = getMissionName(nextAlarm.missionType.name)
                 chipDays.visibility = View.VISIBLE
                 chipMission.visibility = View.VISIBLE
+                tvTimeUntil.text = getString(R.string.time_until_alarm,
+                    TimeUtils.getTimeUntilAlarm(nextAlarm.hour, nextAlarm.minute, requireContext(), nextAlarm.repeatDays))
+                tvTimeUntil.visibility = View.VISIBLE
             }
         }
     }
@@ -100,7 +108,7 @@ class HomeFragment : Fragment() {
     private fun observeStreak() {
         repository.allLogs.observe(viewLifecycleOwner) { logs ->
             val streak = calculateStreak(logs.map { it.triggeredAt to it.missionSuccess })
-            tvStreakCount.text = streak.toString()
+            tvStreakCount.text = "$streak 🔥"
             tvBestStreak.text = "${getString(R.string.best_streak_prefix)} $streak ${getString(R.string.days)}"
         }
     }
@@ -133,6 +141,7 @@ class HomeFragment : Fragment() {
         return when (missionType) {
             "MATH" -> getString(R.string.mission_math)
             "PHOTO" -> getString(R.string.mission_photo)
+            "STEPS" -> getString(R.string.mission_steps)
             else -> ""
         }
     }

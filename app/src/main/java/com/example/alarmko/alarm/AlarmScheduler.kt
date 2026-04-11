@@ -48,27 +48,19 @@ class AlarmScheduler(private val context: Context) {
     }
 
     private fun getNextAlarmTime(alarm: Alarm): Long {
-        val calendar = Calendar.getInstance()
-
-        // Задаваме часа и минутата
-        calendar.set(Calendar.HOUR_OF_DAY, alarm.hour)
-        calendar.set(Calendar.MINUTE, alarm.minute)
-        calendar.set(Calendar.SECOND, 0)
-        calendar.set(Calendar.MILLISECOND, 0)
-
-        // Ако няма избрани дни — еднократна аларма
         if (alarm.repeatDays.isEmpty()) {
-            if (calendar.timeInMillis <= System.currentTimeMillis()) {
-                calendar.add(Calendar.DAY_OF_YEAR, 1)
+            val calendar = Calendar.getInstance().apply {
+                set(Calendar.HOUR_OF_DAY, alarm.hour)
+                set(Calendar.MINUTE, alarm.minute)
+                set(Calendar.SECOND, 0)
+                set(Calendar.MILLISECOND, 0)
+                if (timeInMillis <= System.currentTimeMillis()) {
+                    add(Calendar.DAY_OF_YEAR, 1)
+                }
             }
             return calendar.timeInMillis
         }
 
-        // Намираме следващия ден от избраните
-        val today = calendar.get(Calendar.DAY_OF_WEEK)
-        val alarmDays = alarm.repeatDays.map { it.digitToInt() }
-
-        // Конвертираме нашите дни (1=Пн...7=Нд) към Calendar дни
         fun ourDayToCalendar(day: Int): Int = when(day) {
             1 -> Calendar.MONDAY
             2 -> Calendar.TUESDAY
@@ -80,27 +72,49 @@ class AlarmScheduler(private val context: Context) {
             else -> Calendar.MONDAY
         }
 
-        // Търсим следващия ден
-        for (daysAhead in 0..7) {
-            val checkCalendar = Calendar.getInstance()
-            checkCalendar.add(Calendar.DAY_OF_YEAR, daysAhead)
-            checkCalendar.set(Calendar.HOUR_OF_DAY, alarm.hour)
-            checkCalendar.set(Calendar.MINUTE, alarm.minute)
-            checkCalendar.set(Calendar.SECOND, 0)
-            checkCalendar.set(Calendar.MILLISECOND, 0)
+        val alarmDays = alarm.repeatDays.map { it.digitToInt() }
+
+        // Започваме от утре ако днешният час вече е минал,
+        // или от днес ако часът още не е дошъл
+        val startOffset = run {
+            val todayAlarm = Calendar.getInstance().apply {
+                set(Calendar.HOUR_OF_DAY, alarm.hour)
+                set(Calendar.MINUTE, alarm.minute)
+                set(Calendar.SECOND, 0)
+                set(Calendar.MILLISECOND, 0)
+            }
+            val todayIsSelected = alarmDays.any {
+                ourDayToCalendar(it) == Calendar.getInstance().get(Calendar.DAY_OF_WEEK)
+            }
+            // Ако днес е избран ден И часът още не е дошъл → започваме от днес
+            if (todayIsSelected && todayAlarm.timeInMillis > System.currentTimeMillis()) 0 else 1
+        }
+
+        for (daysAhead in startOffset..startOffset + 7) {
+            val checkCalendar = Calendar.getInstance().apply {
+                add(Calendar.DAY_OF_YEAR, daysAhead)
+                set(Calendar.HOUR_OF_DAY, alarm.hour)
+                set(Calendar.MINUTE, alarm.minute)
+                set(Calendar.SECOND, 0)
+                set(Calendar.MILLISECOND, 0)
+            }
 
             val checkDay = checkCalendar.get(Calendar.DAY_OF_WEEK)
-
             val isSelectedDay = alarmDays.any { ourDayToCalendar(it) == checkDay }
 
-            if (isSelectedDay && checkCalendar.timeInMillis > System.currentTimeMillis()) {
+            if (isSelectedDay) {
                 return checkCalendar.timeInMillis
             }
         }
 
-        // Fallback — следващия ден
-        calendar.add(Calendar.DAY_OF_YEAR, 1)
-        return calendar.timeInMillis
+        // Fallback
+        return Calendar.getInstance().apply {
+            add(Calendar.DAY_OF_YEAR, 1)
+            set(Calendar.HOUR_OF_DAY, alarm.hour)
+            set(Calendar.MINUTE, alarm.minute)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+        }.timeInMillis
     }
 
     fun cancel(alarm: Alarm) {
