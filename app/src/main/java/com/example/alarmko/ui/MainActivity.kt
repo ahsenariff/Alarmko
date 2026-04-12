@@ -15,7 +15,7 @@ import com.example.alarmko.utils.PermissionHelper
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
-class MainActivity : AppCompatActivity() {
+class  MainActivity : AppCompatActivity() {
 
     private lateinit var prefs: SharedPreferences
 
@@ -34,6 +34,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        installSplashScreen()
         // Прилагаме темата ПРЕДИ setContentView
         val prefs = getSharedPreferences("alarmko_prefs", MODE_PRIVATE)
         val isDark = prefs.getBoolean("dark_theme", false)
@@ -42,7 +43,13 @@ class MainActivity : AppCompatActivity() {
             else AppCompatDelegate.MODE_NIGHT_NO
         )
 
-        installSplashScreen()
+        val savedLang = prefs.getString("app_language", "bg") ?: "bg"
+        val locale = java.util.Locale(savedLang)
+        java.util.Locale.setDefault(locale)
+        val config = android.content.res.Configuration()
+        config.setLocale(locale)
+        resources.updateConfiguration(config, resources.displayMetrics)
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 

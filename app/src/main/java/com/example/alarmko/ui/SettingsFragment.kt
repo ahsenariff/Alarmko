@@ -57,6 +57,7 @@ class SettingsFragment : Fragment() {
         loadSettings(view)
         setupSwitchListeners(view)
         setupThemeSwitch(view)
+        setupLanguageSwitch(view)
     }
 
     private fun setupThemeSwitch(view: View) {
@@ -111,5 +112,45 @@ class SettingsFragment : Fragment() {
                 }
             }
         }
+    }
+    private fun setupLanguageSwitch(view: View) {
+        val chipGroup = view.findViewById<com.google.android.material.chip.ChipGroup>(R.id.chipGroupLanguage)
+        val chipBg = view.findViewById<com.google.android.material.chip.Chip>(R.id.chipLangBg)
+        val chipEn = view.findViewById<com.google.android.material.chip.Chip>(R.id.chipLangEn)
+
+        val prefs = requireContext().getSharedPreferences("alarmko_prefs", 0)
+        val savedLang = prefs.getString("app_language", "bg") ?: "bg"
+
+        // Маркираме текущия език
+        if (savedLang == "bg") chipBg.isChecked = true else chipEn.isChecked = true
+
+        chipGroup.setOnCheckedStateChangeListener { _, checkedIds ->
+            val langCode = when {
+                checkedIds.contains(R.id.chipLangBg) -> "bg"
+                checkedIds.contains(R.id.chipLangEn) -> "en"
+                else -> return@setOnCheckedStateChangeListener
+            }
+
+            // Запазваме избора
+            prefs.edit().putString("app_language", langCode).apply()
+
+            // Прилагаме езика
+            applyLanguage(langCode)
+
+            // Рестартираме Activity за да се приложи езикът
+            requireActivity().recreate()
+        }
+    }
+
+    private fun applyLanguage(langCode: String) {
+        val locale = java.util.Locale(langCode)
+        java.util.Locale.setDefault(locale)
+        val config = android.content.res.Configuration()
+        config.setLocale(locale)
+        requireContext().createConfigurationContext(config)
+        requireContext().resources.updateConfiguration(
+            config,
+            requireContext().resources.displayMetrics
+        )
     }
 }
