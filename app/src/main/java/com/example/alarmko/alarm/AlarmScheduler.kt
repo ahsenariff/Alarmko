@@ -1,6 +1,5 @@
 package com.example.alarmko.alarm
 
-
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
@@ -74,8 +73,6 @@ class AlarmScheduler(private val context: Context) {
 
         val alarmDays = alarm.repeatDays.map { it.digitToInt() }
 
-        // Започваме от утре ако днешният час вече е минал,
-        // или от днес ако часът още не е дошъл
         val startOffset = run {
             val todayAlarm = Calendar.getInstance().apply {
                 set(Calendar.HOUR_OF_DAY, alarm.hour)
@@ -86,7 +83,6 @@ class AlarmScheduler(private val context: Context) {
             val todayIsSelected = alarmDays.any {
                 ourDayToCalendar(it) == Calendar.getInstance().get(Calendar.DAY_OF_WEEK)
             }
-            // Ако днес е избран ден И часът още не е дошъл → започваме от днес
             if (todayIsSelected && todayAlarm.timeInMillis > System.currentTimeMillis()) 0 else 1
         }
 
@@ -106,8 +102,6 @@ class AlarmScheduler(private val context: Context) {
                 return checkCalendar.timeInMillis
             }
         }
-
-        // Fallback
         return Calendar.getInstance().apply {
             add(Calendar.DAY_OF_YEAR, 1)
             set(Calendar.HOUR_OF_DAY, alarm.hour)
