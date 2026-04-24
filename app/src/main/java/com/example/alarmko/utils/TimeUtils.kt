@@ -9,8 +9,6 @@ object TimeUtils {
     fun formatTime(hour: Int, minute: Int): String {
         return String.format("%02d:%02d", hour, minute)
     }
-
-    // Новата версия взима предвид повтарящите се дни
     fun getNextAlarmMillis(hour: Int, minute: Int, repeatDays: String = ""): Long {
         if (repeatDays.isEmpty()) {
             val calendar = Calendar.getInstance().apply {
@@ -86,8 +84,6 @@ object TimeUtils {
             else -> "${minutes} ${context.getString(R.string.minutes_short)}"
         }
     }
-
-    // Добавихме context за да четем strings вместо hardcoded текст
     fun formatDaysShort(repeatDays: String, context: Context): String {
         if (repeatDays.isEmpty()) return context.getString(R.string.repeat_once)
         if (repeatDays == "1234567") return context.getString(R.string.repeat_daily)

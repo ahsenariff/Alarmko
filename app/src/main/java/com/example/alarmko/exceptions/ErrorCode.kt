@@ -1,11 +1,8 @@
 package com.example.alarmko.exceptions
 
 enum class ErrorCode {
-    // Аларма
     ALARM_SCHEDULING_FAILED,
     ALARM_PERMISSION_DENIED,
-    ALARM_NOT_FOUND,
-    ALARM_INVALID_TIME,
     ALARM_INVALID_TITLE,
     ALARM_NO_MISSION_SELECTED,
 
@@ -23,6 +20,4 @@ enum class ErrorCode {
     MISSION_FAILED,
     MISSION_PHOTO_ERROR,
     MISSION_QR_NOT_FOUND,
-    MISSION_STEPS_SENSOR_UNAVAILABLE,
-    MISSION_SHAKE_SENSOR_UNAVAILABLE
 }
