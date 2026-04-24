@@ -20,7 +20,6 @@ class AlarmRepository(context: Context) {
     private val alarmLogDao = db.alarmLogDao()
     private val bedtimeDao = db.bedtimeDao()
 
-    // Аларми
     val allAlarms: LiveData<List<Alarm>> = alarmDao.getAll()
 
     suspend fun insertAlarm(alarm: Alarm): Long {

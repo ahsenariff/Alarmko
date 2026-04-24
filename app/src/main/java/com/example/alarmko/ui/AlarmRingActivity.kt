@@ -29,7 +29,7 @@ class AlarmRingActivity : AppCompatActivity() {
 
     private var alarmId: Int = -1
     private lateinit var repository: AlarmRepository
-    private var currentAlarm: Alarm? = null  // ← запазваме алармата като поле
+    private var currentAlarm: Alarm? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,8 +66,6 @@ class AlarmRingActivity : AppCompatActivity() {
                 val tvTaskDescription = findViewById<TextView>(R.id.tvTaskDescription)
                 val btnStartMission = findViewById<MaterialButton>(R.id.btnStartMission)
                 val btnSnooze = findViewById<MaterialButton>(R.id.btnSnooze)
-
-                // Показваме override часа ако има такъв (при snooze)
                 val displayHour = if (hourOverride != -1) hourOverride else alarm.hour
                 val displayMinute = if (minuteOverride != -1) minuteOverride else alarm.minute
                 tvTime.text = String.format("%02d:%02d", displayHour, displayMinute)
@@ -129,7 +127,6 @@ class AlarmRingActivity : AppCompatActivity() {
                 }
             }
             MissionType.PHOTO -> PhotoMissionFragment().also { mission ->
-                // Подаваме категорията и repository-то
                 mission.setPhotoCategory(alarm.photoCategory)
                 mission.setRepository(repository)
                 mission.setOnMissionSuccessListener {
@@ -166,8 +163,6 @@ class AlarmRingActivity : AppCompatActivity() {
         }
 
         stopService(Intent(this, AlarmService::class.java))
-
-        // Показваме успех екрана
         startActivity(Intent(this, MissionSuccessActivity::class.java))
         finish()
     }
@@ -186,7 +181,6 @@ class AlarmRingActivity : AppCompatActivity() {
             )
         }
 
-        // За Android 8+ — отключи keyguard
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val keyguardManager = getSystemService(KEYGUARD_SERVICE)
                     as android.app.KeyguardManager
