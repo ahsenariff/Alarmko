@@ -60,4 +60,5 @@ dependencies {
     implementation("androidx.core:core-splashscreen:1.0.1")
     implementation("androidx.recyclerview:recyclerview:1.3.2")
     implementation("com.google.mlkit:image-labeling:17.0.7")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
 }

@@ -1,4 +1,4 @@
-package com.example.alarmko.ui
+package com.example.alarmko.ui.alarms
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,15 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alarmko.R
-import com.example.alarmko.alarm.AlarmScheduler
-import com.example.alarmko.data.repository.AlarmRepository
+import com.example.alarmko.ui.alarms.AlarmAdapter
+import com.example.alarmko.ui.alarms.AlarmsViewModel
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-import kotlinx.coroutines.launch
 
 class AlarmsFragment : Fragment() {
 
@@ -22,7 +21,7 @@ class AlarmsFragment : Fragment() {
     private lateinit var fabAddAlarm: ExtendedFloatingActionButton
     private lateinit var tvNoAlarms: TextView
     private lateinit var adapter: AlarmAdapter
-    private lateinit var repository: AlarmRepository
+    private val viewModel: AlarmsViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,8 +33,6 @@ class AlarmsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        repository = AlarmRepository(requireContext())
 
         initViews(view)
         setupRecyclerView()
@@ -55,10 +52,8 @@ class AlarmsFragment : Fragment() {
     private fun setupRecyclerView() {
         adapter = AlarmAdapter(
             onToggle = { alarm, isActive ->
-                lifecycleScope.launch {
-                    val updated = alarm.copy(isActive = isActive)
-                    repository.updateAlarm(updated)
-                }
+                val updated = alarm.copy(isActive = isActive)
+                viewModel.updateAlarm(updated)
             },
             onClick = { alarm ->
                 val bundle = Bundle().apply {
@@ -69,6 +64,7 @@ class AlarmsFragment : Fragment() {
         )
         rvAlarms.layoutManager = LinearLayoutManager(requireContext())
         rvAlarms.adapter = adapter
+
         val itemTouchHelper = androidx.recyclerview.widget.ItemTouchHelper(
             object : androidx.recyclerview.widget.ItemTouchHelper.SimpleCallback(
                 0,
@@ -84,15 +80,7 @@ class AlarmsFragment : Fragment() {
                 override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                     val position = viewHolder.adapterPosition
                     val alarm = adapter.currentList[position]
-
-                    lifecycleScope.launch {
-                        try {
-                            repository.deleteAlarm(alarm)
-                            AlarmScheduler(requireContext()).cancel(alarm)
-                        } catch (e: Exception) {
-                            e.printStackTrace()
-                        }
-                    }
+                    viewModel.deleteAlarm(alarm)
                 }
             }
         )
@@ -100,7 +88,7 @@ class AlarmsFragment : Fragment() {
     }
 
     private fun observeAlarms() {
-        repository.allAlarms.observe(viewLifecycleOwner) { alarms ->
+        viewModel.allAlarms.observe(viewLifecycleOwner) { alarms ->
             adapter.submitList(alarms)
             tvNoAlarms.visibility = if (alarms.isEmpty()) View.VISIBLE else View.GONE
         }
