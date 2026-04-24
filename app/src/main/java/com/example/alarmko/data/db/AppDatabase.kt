@@ -23,7 +23,6 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun alarmDao(): AlarmDao
     abstract fun alarmLogDao(): AlarmLogDao
     abstract fun bedtimeDao(): BedtimeDao
-
     abstract fun cameraSettingsDao(): CameraSettingsDao
 
     companion object {
