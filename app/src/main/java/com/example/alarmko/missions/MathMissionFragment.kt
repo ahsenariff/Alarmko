@@ -49,7 +49,6 @@ class MathMissionFragment : Fragment() {
         etAnswer = view.findViewById(R.id.etMathAnswer)
         btnSubmit = view.findViewById(R.id.btnSubmitAnswer)
 
-        // Показваме трудността
         tvDifficulty.text = when (difficulty) {
             1 -> getString(R.string.difficulty_easy)
             2 -> getString(R.string.difficulty_medium)
@@ -67,7 +66,6 @@ class MathMissionFragment : Fragment() {
     private fun generateQuestion() {
         try {
             when (difficulty) {
-                // Лесно — събиране и изваждане, числа 1-10
                 1 -> {
                     val a = Random.nextInt(1, 11)
                     val b = Random.nextInt(1, 11)
@@ -75,14 +73,12 @@ class MathMissionFragment : Fragment() {
                     correctAnswer = if (operator == "+") a + b else a - b
                     tvQuestion.text = "$a $operator $b = ?"
                 }
-                // Средно — умножение, числа 1-10
                 2 -> {
                     val a = Random.nextInt(1, 11)
                     val b = Random.nextInt(1, 11)
                     correctAnswer = a * b
                     tvQuestion.text = "$a × $b = ?"
                 }
-                // Трудно — две действия, числа 1-20
                 3 -> {
                     val a = Random.nextInt(1, 21)
                     val b = Random.nextInt(1, 11)

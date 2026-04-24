@@ -39,7 +39,6 @@ class PhotoMissionFragment : Fragment() {
     private lateinit var tvTargetObject: TextView
     private lateinit var tvAttempts: TextView
     private lateinit var btnTakePhoto: MaterialButton
-
     private var imageCapture: ImageCapture? = null
     private var onMissionSuccess: (() -> Unit)? = null
 
@@ -105,7 +104,6 @@ class PhotoMissionFragment : Fragment() {
 
                 requireActivity().runOnUiThread {
                     if (enabled.isEmpty()) {
-                        // Няма активирани обекти — използваме всички от категорията
                         availableObjects = PhotoObject.getByCategory(category)
                     } else {
                         availableObjects = enabled
@@ -226,11 +224,9 @@ class PhotoMissionFragment : Fragment() {
 
                     val target = currentObject
                     if (target != null && PhotoObject.verifyLabels(labelTexts, target)) {
-                        // Успех — правилният обект е разпознат
                         tvPhotoStatus.text = getString(R.string.photo_success)
                         onMissionSuccess?.invoke()
                     } else {
-                        // Неуспех — обновяваме опитите
                         onPhotoFailed()
                     }
                 }

@@ -19,10 +19,8 @@ class StepMissionFragment : Fragment(), SensorEventListener {
     private var stepTarget: Int = 20
     private var stepCount: Int = 0
     private var onMissionSuccess: (() -> Unit)? = null
-
     private lateinit var sensorManager: SensorManager
     private var stepDetector: Sensor? = null
-
     private lateinit var tvStepCount: TextView
     private lateinit var tvStepTarget: TextView
     private lateinit var progressBar: ProgressBar
