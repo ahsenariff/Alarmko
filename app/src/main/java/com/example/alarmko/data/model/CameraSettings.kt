@@ -6,6 +6,6 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "camera_settings")
 data class CameraSettings(
     @PrimaryKey
-    val objectName: String,  // името на PhotoObject enum стойността
+    val objectName: String,
     val isEnabled: Boolean = false
 )

@@ -19,16 +19,13 @@ class MissionSuccessActivity : AppCompatActivity() {
         val tvTitle = findViewById<TextView>(R.id.tvSuccessTitle)
         val tvMessage = findViewById<TextView>(R.id.tvSuccessMessage)
 
-        // Анимация на emoji — подскача
         val bounceAnim = AnimationUtils.loadAnimation(this, R.anim.bounce)
         tvEmoji.startAnimation(bounceAnim)
 
-        // Анимация на текста — изплува
         val slideUpAnim = AnimationUtils.loadAnimation(this, R.anim.slide_up)
         tvTitle.startAnimation(slideUpAnim)
         tvMessage.startAnimation(slideUpAnim)
 
-        // След 2.5 секунди затваря
         Handler(Looper.getMainLooper()).postDelayed({
             finish()
         }, 2500)

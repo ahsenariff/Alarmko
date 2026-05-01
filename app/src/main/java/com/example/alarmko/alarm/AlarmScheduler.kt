@@ -10,7 +10,6 @@ import com.example.alarmko.exceptions.AlarmPermissionException
 import com.example.alarmko.exceptions.AlarmSchedulingException
 import com.example.alarmko.exceptions.ErrorCode
 class AlarmScheduler(private val context: Context) {
-
     private val alarmManager =
         context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
@@ -45,7 +44,6 @@ class AlarmScheduler(private val context: Context) {
             throw AlarmSchedulingException(ErrorCode.ALARM_SCHEDULING_FAILED, e)
         }
     }
-
     private fun getNextAlarmTime(alarm: Alarm): Long {
         if (alarm.repeatDays.isEmpty()) {
             val calendar = Calendar.getInstance().apply {
@@ -59,7 +57,6 @@ class AlarmScheduler(private val context: Context) {
             }
             return calendar.timeInMillis
         }
-
         fun ourDayToCalendar(day: Int): Int = when(day) {
             1 -> Calendar.MONDAY
             2 -> Calendar.TUESDAY
@@ -85,7 +82,6 @@ class AlarmScheduler(private val context: Context) {
             }
             if (todayIsSelected && todayAlarm.timeInMillis > System.currentTimeMillis()) 0 else 1
         }
-
         for (daysAhead in startOffset..startOffset + 7) {
             val checkCalendar = Calendar.getInstance().apply {
                 add(Calendar.DAY_OF_YEAR, daysAhead)
@@ -130,7 +126,7 @@ class AlarmScheduler(private val context: Context) {
         val notifyIntent = Intent(context, AlarmReceiver::class.java).apply {
             putExtra("ALARM_ID", alarm.id)
             putExtra("IS_NOTIFICATION", true)
-            putExtra("NOTIFY_BEFORE_MINUTES", alarm.notifyBeforeMinutes) // ← добавяме
+            putExtra("NOTIFY_BEFORE_MINUTES", alarm.notifyBeforeMinutes)
         }
 
         val notifyPendingIntent = PendingIntent.getBroadcast(

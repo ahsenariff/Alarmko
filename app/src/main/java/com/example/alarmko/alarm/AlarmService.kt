@@ -17,10 +17,8 @@ import com.example.alarmko.R
 import com.example.alarmko.ui.AlarmRingActivity
 
 class AlarmService : Service() {
-
     private var wakeLock: PowerManager.WakeLock? = null
     private var mediaPlayer: MediaPlayer? = null
-
     companion object {
         const val CHANNEL_ID = "alarmko_alarm_channel"
         const val NOTIFICATION_ID = 1
@@ -42,6 +40,7 @@ class AlarmService : Service() {
         }
 
         acquireWakeLock()
+
         val notification = buildNotification(alarmId, hourOverride, minuteOverride)
         startForeground(NOTIFICATION_ID, notification)
         startRingtone()

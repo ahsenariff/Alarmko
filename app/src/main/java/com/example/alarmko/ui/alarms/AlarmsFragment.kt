@@ -16,7 +16,6 @@ import com.example.alarmko.ui.alarms.AlarmsViewModel
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 
 class AlarmsFragment : Fragment() {
-
     private lateinit var rvAlarms: RecyclerView
     private lateinit var fabAddAlarm: ExtendedFloatingActionButton
     private lateinit var tvNoAlarms: TextView

@@ -19,7 +19,6 @@ enum class PhotoObject(
     val category: PhotoCategory,
     val keywords: List<String>
 ) {
-    // Кухня
     GLASS(R.string.object_glass, "🥛", PhotoCategory.KITCHEN,
         listOf("Cup", "Glass", "Mug", "Drink", "Drinkware",
             "Tableware", "Vessel", "Container", "Tumbler")),
@@ -37,7 +36,6 @@ enum class PhotoObject(
         listOf("Coffee cup", "Coffee", "Mug", "Espresso", "Cup",
             "Drink", "Hot drink", "Caffeine", "Tableware", "Drinkware")),
 
-    // Баня
     TOOTHBRUSH(R.string.object_toothbrush, "🪥", PhotoCategory.BATHROOM,
         listOf("Toothbrush", "Brush", "Dental", "Teeth", "Oral care",
             "Hygiene", "Bathroom", "Personal care")),
@@ -51,7 +49,6 @@ enum class PhotoObject(
         listOf("Mirror", "Glass", "Reflection", "Bathroom",
             "Looking glass", "Wall")),
 
-    // Здраве
     PILL(R.string.object_pill, "💊", PhotoCategory.HEALTH,
         listOf("Pill", "Tablet", "Capsule", "Medicine", "Drug", "Pharmaceutical", "Medication", "Medical", "Health",
             "Vitamin", "Supplement", "Paper", "Tableware", "Pattern")),
@@ -62,7 +59,6 @@ enum class PhotoObject(
         listOf("Vitamin", "Supplement", "Pill", "Capsule", "Tablet",
             "Medicine", "Health", "Nutrition", "Bottle", "Tableware")),
 
-    // Работно място
     NOTEBOOK(R.string.object_notebook, "📓", PhotoCategory.WORKSPACE,
         listOf("Notebook", "Book", "Paper", "Journal", "Diary",
             "Writing", "Stationery", "Office", "Spiral notebook")),
@@ -74,7 +70,6 @@ enum class PhotoObject(
     MOUSE(R.string.object_mouse, "🖱️", PhotoCategory.WORKSPACE,
         listOf("Mouse", "Computer mouse", "Input device", "Technology", "Office", "Electronic", "Computer", "Peripheral")),
 
-    // Всекидневна
     KEYS(R.string.object_keys, "🔑", PhotoCategory.LIVING_ROOM,
         listOf("Key", "Keys", "Door key", "Metal", "Lock",
             "Security", "House key", "Keychain")),

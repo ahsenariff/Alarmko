@@ -5,38 +5,30 @@
     android:viewportWidth="108"
     android:viewportHeight="108">
 
-    <!-- Тяло на будилника — по-малко -->
     <path
         android:fillColor="#CC0000"
         android:pathData="M54,30 C40,30 30,40 30,54 C30,68 40,78 54,78 C68,78 78,68 78,54 C78,40 68,30 54,30Z"/>
 
-    <!-- Вътрешен кръг -->
     <path
         android:fillColor="#FFFFFF"
         android:pathData="M54,37 C44,37 37,44 37,54 C37,64 44,71 54,71 C64,71 71,64 71,54 C71,44 64,37 54,37Z"/>
 
-    <!-- Звънче ляво -->
     <path
         android:fillColor="#CC0000"
         android:pathData="M37,32 C34,29 30,29 27,32 C24,35 24,39 27,42 L37,32Z"/>
 
-    <!-- Звънче дясно -->
     <path
         android:fillColor="#CC0000"
         android:pathData="M71,32 C74,29 78,29 81,32 C84,35 84,39 81,42 L71,32Z"/>
 
-    <!-- Крак ляво -->
     <path
         android:fillColor="#CC0000"
         android:pathData="M44,76 C42,80 41,83 40,85 L48,85 L49,76Z"/>
 
-    <!-- Крак дясно -->
     <path
         android:fillColor="#CC0000"
         android:pathData="M64,76 C66,80 67,83 68,85 L60,85 L59,76Z"/>
 
-    <!-- Тикче -->
-    <!-- Тикче -->
     <path
         android:fillColor="#00000000"
         android:strokeColor="#00AA44"

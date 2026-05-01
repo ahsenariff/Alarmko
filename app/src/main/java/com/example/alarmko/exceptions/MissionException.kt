@@ -10,11 +10,6 @@ class MissionPhotoException(
     cause: Throwable? = null
 ) : MissionFailedException(errorCode, cause)
 
-class MissionQrException(
-    override val errorCode: ErrorCode = ErrorCode.MISSION_QR_NOT_FOUND,
-    cause: Throwable? = null
-) : MissionFailedException(errorCode, cause)
-
 class MissionSensorException(
     override val errorCode: ErrorCode,
     cause: Throwable? = null

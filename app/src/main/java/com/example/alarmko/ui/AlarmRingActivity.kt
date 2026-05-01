@@ -193,7 +193,6 @@ class AlarmRingActivity : AppCompatActivity() {
             this,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    // блокираме back бутона
                 }
             }
         )
