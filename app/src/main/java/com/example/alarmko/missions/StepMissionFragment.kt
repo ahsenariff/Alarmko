@@ -13,9 +13,10 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.alarmko.R
+import com.example.alarmko.exceptions.ErrorCode
+import com.example.alarmko.exceptions.MissionSensorException
 
 class StepMissionFragment : Fragment(), SensorEventListener {
-
     private var stepTarget: Int = 20
     private var stepCount: Int = 0
     private var onMissionSuccess: (() -> Unit)? = null
@@ -29,7 +30,6 @@ class StepMissionFragment : Fragment(), SensorEventListener {
     fun setStepTarget(target: Int) {
         stepTarget = target
     }
-
     fun setOnMissionSuccessListener(listener: () -> Unit) {
         onMissionSuccess = listener
     }
@@ -57,47 +57,49 @@ class StepMissionFragment : Fragment(), SensorEventListener {
         sensorManager = requireContext()
             .getSystemService(Context.SENSOR_SERVICE) as SensorManager
 
-        // TYPE_STEP_DETECTOR засича всяка отделна стъпка
         stepDetector = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR)
 
         if (stepDetector == null) {
-            // Сензорът не е наличен на устройството
             tvSensorUnavailable.visibility = View.VISIBLE
             progressBar.visibility = View.GONE
         } else {
-            sensorManager.registerListener(
-                this,
-                stepDetector,
-                SensorManager.SENSOR_DELAY_NORMAL
-            )
-        }
-    }
-
-    override fun onSensorChanged(event: SensorEvent?) {
-        if (event?.sensor?.type == Sensor.TYPE_STEP_DETECTOR) {
-            // TYPE_STEP_DETECTOR връща 1.0 за всяка засечена стъпка
-            stepCount++
-
-            requireActivity().runOnUiThread {
-                tvStepCount.text = stepCount.toString()
-                progressBar.progress = stepCount
-
-                if (stepCount >= stepTarget) {
-                    // Спираме listener-а веднага след успех
-                    sensorManager.unregisterListener(this)
-                    onMissionSuccess?.invoke()
-                }
+            try {
+                sensorManager.registerListener(
+                    this,
+                    stepDetector,
+                    SensorManager.SENSOR_DELAY_NORMAL
+                )
+            } catch (e: Exception) {
+                throw MissionSensorException(ErrorCode.MISSION_FAILED, e)
             }
         }
     }
 
+    override fun onSensorChanged(event: SensorEvent?) {
+        try {
+            if (event?.sensor?.type == Sensor.TYPE_STEP_DETECTOR) {
+                stepCount++
+
+                requireActivity().runOnUiThread {
+                    tvStepCount.text = stepCount.toString()
+                    progressBar.progress = stepCount
+
+                    if (stepCount >= stepTarget) {
+                        sensorManager.unregisterListener(this)
+                        onMissionSuccess?.invoke()
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            throw MissionSensorException(ErrorCode.MISSION_SENSOR_ERROR, e)
+        }
+    }
+
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
-        // Не е нужно за стъпкомера
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        // Задължително — спираме сензора когато fragment-ът се унищожава
         sensorManager.unregisterListener(this)
     }
 }

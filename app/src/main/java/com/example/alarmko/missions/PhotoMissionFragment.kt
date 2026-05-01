@@ -32,7 +32,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class PhotoMissionFragment : Fragment() {
-
     private lateinit var previewView: androidx.camera.view.PreviewView
     private lateinit var tvPhotoStatus: TextView
     private lateinit var tvDetectedObject: TextView
@@ -41,11 +40,8 @@ class PhotoMissionFragment : Fragment() {
     private lateinit var btnTakePhoto: MaterialButton
     private var imageCapture: ImageCapture? = null
     private var onMissionSuccess: (() -> Unit)? = null
-
     private var photoCategory: String? = null
     private var repository: AlarmRepository? = null
-
-    // Логика за опити
     private var attempts = 0
     private var currentObject: PhotoObject? = null
     private var availableObjects: List<PhotoObject> = listOf()
@@ -108,13 +104,15 @@ class PhotoMissionFragment : Fragment() {
                     } else {
                         availableObjects = enabled
                     }
-
                     if (availableObjects.isNotEmpty()) {
                         currentObject = availableObjects.random()
                         showTargetObject()
                     }
                 }
             } catch (e: Exception) {
+                requireActivity().runOnUiThread {
+                    tvPhotoStatus.text = getString(R.string.photo_error)
+                }
                 e.printStackTrace()
             }
         }
@@ -164,6 +162,7 @@ class PhotoMissionFragment : Fragment() {
 
             } catch (e: Exception) {
                 tvPhotoStatus.text = getString(R.string.photo_error)
+                throw MissionPhotoException(ErrorCode.MISSION_PHOTO_ERROR, e)
             }
         }, ContextCompat.getMainExecutor(requireContext()))
     }
@@ -237,6 +236,7 @@ class PhotoMissionFragment : Fragment() {
                     btnTakePhoto.isEnabled = true
                     tvPhotoStatus.text = getString(R.string.photo_error)
                 }
+                throw MissionPhotoException(ErrorCode.MISSION_PHOTO_ERROR, it)
             }
     }
 
@@ -278,3 +278,4 @@ class PhotoMissionFragment : Fragment() {
         )
     }
 }
+
