@@ -31,7 +31,6 @@
             android:orientation="vertical"
             android:layout_marginStart="12dp">
 
-            <!-- Дата и час -->
             <TextView
                 android:id="@+id/tvHistoryDate"
                 android:layout_width="wrap_content"
@@ -40,7 +39,6 @@
                 android:textStyle="bold"
                 android:textColor="?attr/colorOnSurface"/>
 
-            <!-- Статус -->
             <TextView
                 android:id="@+id/tvHistoryStatus"
                 android:layout_width="wrap_content"

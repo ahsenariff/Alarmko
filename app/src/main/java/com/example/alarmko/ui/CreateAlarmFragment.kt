@@ -35,9 +35,7 @@ class CreateAlarmFragment : Fragment() {
     private lateinit var chipGroupSteps: ChipGroup
     private lateinit var layoutDifficulty: LinearLayout
     private lateinit var chipGroupDifficulty: ChipGroup
-
     private var editingAlarmId: Int = -1
-
     private val viewModel: CreateAlarmViewModel by viewModels()
 
     override fun onCreateView(

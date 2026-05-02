@@ -18,10 +18,11 @@ class AlarmRepository(context: Context) {
     private val db = AppDatabase.getInstance(context)
     private val alarmDao = db.alarmDao()
     private val alarmLogDao = db.alarmLogDao()
-    private val bedtimeDao = db.bedtimeDao()
-
     val allAlarms: LiveData<List<Alarm>> = alarmDao.getAll()
-
+    val allLogs: LiveData<List<AlarmLog>> = alarmLogDao.getAll()
+    private val cameraSettingsDao = db.cameraSettingsDao()
+    val allCameraSettings: LiveData<List<CameraSettings>> =
+        cameraSettingsDao.getAll()
     suspend fun insertAlarm(alarm: Alarm): Long {
         return try {
             alarmDao.insert(alarm)
@@ -62,33 +63,10 @@ class AlarmRepository(context: Context) {
         return alarmDao.getActiveAlarms()
     }
 
-    // История
-    val allLogs: LiveData<List<AlarmLog>> = alarmLogDao.getAll()
-
 
     suspend fun getSuccessCountSince(fromDate: Long): Int {
         return alarmLogDao.getSuccessCountSince(fromDate)
     }
-
-    // Bedtime
-    val bedtimeSettings: LiveData<BedtimeSettings?> = bedtimeDao.get()
-
-    suspend fun saveBedtimeSettings(settings: BedtimeSettings) {
-        bedtimeDao.insert(settings)
-    }
-
-    suspend fun updateBedtimeSettings(settings: BedtimeSettings) {
-        bedtimeDao.update(settings)
-    }
-
-    suspend fun getBedtimeSettingsOnce(): BedtimeSettings? {
-        return bedtimeDao.getOnce()
-    }
-    private val cameraSettingsDao = db.cameraSettingsDao()
-
-    // Camera Settings
-    val allCameraSettings: LiveData<List<CameraSettings>> =
-        cameraSettingsDao.getAll()
 
     suspend fun saveCameraSettings(settings: CameraSettings) {
         try {

@@ -15,7 +15,6 @@
         android:layout_height="wrap_content"
         android:padding="16dp">
 
-        <!-- Час -->
         <TextView
             android:id="@+id/tvAlarmTime"
             android:layout_width="wrap_content"
@@ -26,7 +25,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
 
-        <!-- Toggle -->
         <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/switchAlarm"
             android:layout_width="wrap_content"
@@ -35,7 +33,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="@id/tvAlarmTime"/>
 
-        <!-- Дни -->
         <TextView
             android:id="@+id/tvAlarmDays"
             android:layout_width="wrap_content"
@@ -46,7 +43,6 @@
             app:layout_constraintTop_toBottomOf="@id/tvAlarmTime"
             app:layout_constraintStart_toStartOf="parent"/>
 
-        <!-- Описание -->
         <TextView
             android:id="@+id/tvAlarmTitle"
             android:layout_width="0dp"
@@ -58,7 +54,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/switchAlarm"/>
 
-        <!-- Мисия -->
         <ImageView
             android:id="@+id/ivMissionIcon"
             android:layout_width="32dp"

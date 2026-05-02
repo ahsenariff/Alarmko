@@ -46,7 +46,6 @@ abstract class AppDatabase : RoomDatabase() {
         }
         val MIGRATION_3_4 = object : Migration(3, 4) {
             override fun migrate(database: SupportSQLiteDatabase) {
-                // Създаваме нова таблица с правилната структура
                 database.execSQL("""
             CREATE TABLE alarm_log_new (
                 id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
@@ -58,14 +57,11 @@ abstract class AppDatabase : RoomDatabase() {
                 FOREIGN KEY(alarmId) REFERENCES alarms(id) ON DELETE SET NULL
             )
         """)
-                // Копираме данните
                 database.execSQL("""
             INSERT INTO alarm_log_new 
             SELECT * FROM alarm_log
         """)
-                // Изтриваме старата таблица
                 database.execSQL("DROP TABLE alarm_log")
-                // Преименуваме новата
                 database.execSQL("ALTER TABLE alarm_log_new RENAME TO alarm_log")
             }
         }
