@@ -22,20 +22,17 @@ class  MainActivity : AppCompatActivity() {
     private val notificationPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) {
-        // След нотификации → Activity Recognition
         checkActivityRecognition()
     }
 
     private val activityRecognitionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) {
-        // След Activity Recognition → Battery Optimization
         checkBatteryOptimization()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
-        // Прилагаме темата ПРЕДИ setContentView
         val prefs = getSharedPreferences("alarmko_prefs", MODE_PRIVATE)
         val isDark = prefs.getBoolean("dark_theme", false)
         AppCompatDelegate.setDefaultNightMode(
@@ -79,7 +76,6 @@ class  MainActivity : AppCompatActivity() {
             .show()
     }
 
-    // Верига: Нотификации → Activity Recognition → Battery → Exact Alarm → MIUI
     private fun startPermissionFlow() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (!PermissionHelper.hasNotificationPermission(this)) {
